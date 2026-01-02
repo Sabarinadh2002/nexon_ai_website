@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexon-AI - Who We Serve</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505; /* Deep black */
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Custom Gradient for text */
+        .gradient-text {
+            background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Subtle grid background pattern */
+        .bg-grid {
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-attachment: fixed;
+        }
+
+        /* Tier Box Active States */
+        .tier-box {
+            transition: all 0.3s ease;
+        }
+        .tier-box.active {
+            background-color: rgba(30, 41, 59, 0.8);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 20px -5px rgba(59, 130, 246, 0.3);
+        }
+        .tier-box.active h3 {
+            color: #60a5fa; /* Blue-400 */
+        }
+
+        /* Orbit Animations */
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes spinReverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+        .animate-spin-slow {
+            animation: spinSlow 60s linear infinite;
+        }
+        .animate-spin-reverse {
+            animation: spinReverse 60s linear infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-grid flex items-center justify-center">
+
+    <!-- SECTION 5: WHO WE SERVE (Tiered Orbit Design) -->
+    <section id="clients-section" class="py-24 px-4 sm:px-8 lg:px-16 relative overflow-hidden bg-black w-full">
+        
+        <!-- Dynamic Ambient Glow -->
+        <div id="tier-glow" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none transition-colors duration-700"></div>
+
+        <div class="container mx-auto relative z-10">
+            
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+                    Perfect for <span class="gradient-text">Every Stage</span> of Growth
+                </h2>
+                <p class="text-gray-400 mb-10">Tailored solutions whether you're a local shop or a global enterprise.</p>
+                
+                <!-- Tier Selector Boxes -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                    
+                    <!-- Tier 1 Box -->
+                    <div onclick="selectTier(0)" class="tier-box active cursor-pointer p-6 rounded-xl border border-gray-700 bg-gray-900/50 hover:bg-gray-800 transition-all duration-300 text-center group relative overflow-hidden">
+                        <div class="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <h3 class="text-lg font-bold text-white relative z-10">Small Business</h3>
+                        <p class="text-xs text-blue-400 mt-1 uppercase tracking-wider relative z-10">Tier 1 • 1-10 Staff</p>
+                    </div>
+
+                    <!-- Tier 2 Box -->
+                    <div onclick="selectTier(1)" class="tier-box cursor-pointer p-6 rounded-xl border border-gray-700 bg-gray-900/50 hover:bg-gray-800 transition-all duration-300 text-center group relative overflow-hidden">
+                        <div class="absolute inset-0 bg-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <h3 class="text-lg font-bold text-white relative z-10">Growing Chains</h3>
+                        <p class="text-xs text-purple-400 mt-1 uppercase tracking-wider relative z-10">Tier 2 • Multi-Location</p>
+                    </div>
+
+                    <!-- Tier 3 Box -->
+                    <div onclick="selectTier(2)" class="tier-box cursor-pointer p-6 rounded-xl border border-gray-700 bg-gray-900/50 hover:bg-gray-800 transition-all duration-300 text-center group relative overflow-hidden">
+                        <div class="absolute inset-0 bg-green-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <h3 class="text-lg font-bold text-white relative z-10">Enterprise</h3>
+                        <p class="text-xs text-green-400 mt-1 uppercase tracking-wider relative z-10">Tier 3 • Large Org</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- CIRCULAR LAYOUT (Desktop) -->
+            <div class="hidden lg:block relative w-[900px] h-[700px] mx-auto mt-20">
+                
+                <!-- Center Static Hub -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] z-20 flex flex-col items-center justify-center text-center p-8 rounded-full bg-gray-900 border border-gray-700 shadow-[0_0_60px_-10px_rgba(0,0,0,0.8)] backdrop-blur-xl transition-all duration-500" id="center-hub">
+                    
+                    <!-- Inner Glow Ring -->
+                    <div class="absolute inset-4 rounded-full border border-white/5 pointer-events-none"></div>
+                    
+                    <div class="mb-6 p-4 rounded-full bg-white/5 border border-white/10" id="tier-icon-container">
+                        <i id="tier-icon" data-lucide="store" class="w-12 h-12 text-blue-400"></i>
+                    </div>
+                    
+                    <h3 id="tier-title" class="text-2xl font-bold text-white mb-4">Small Local Businesses</h3>
+                    <p id="tier-desc" class="text-sm text-gray-400 leading-relaxed">
+                        Perfect for dentists, beauty salons, barbers, gyms, and home services. We answer every call so you can focus on service.
+                    </p>
+                </div>
+
+                <!-- Revolving Orbit Container -->
+                <div class="absolute top-1/2 left-1/2 w-[800px] h-[800px] -ml-[400px] -mt-[400px] rounded-full border border-white/5 animate-spin-slow pointer-events-none">
+                    <!-- Orbit Track (Visual only) -->
+                </div>
+
+                <!-- Orbit Items Container (Rotates) -->
+                <div class="absolute top-1/2 left-1/2 w-[800px] h-[800px] -ml-[400px] -mt-[400px] animate-spin-slow z-10" id="orbit-container">
+                    <!-- Items injected via JS -->
+                </div>
+
+            </div>
+
+            <!-- STACKED LAYOUT (Mobile/Tablet) -->
+            <div class="lg:hidden space-y-6 mt-12" id="mobile-stack">
+                <!-- Content injected via JS -->
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // --- Tier Selection Logic ---
+        const tierData = [
+            {
+                title: "Small Local Businesses",
+                desc: "Perfect for dentists, beauty salons, barbers, gyms, and home services. We answer every call so you can focus on service.",
+                icon: "store",
+                color: "text-blue-400",
+                orbitItems: [
+                    { icon: "scissors", label: "Salon" },
+                    { icon: "stethoscope", label: "Clinic" },
+                    { icon: "utensils", label: "Cafe" },
+                    { icon: "wrench", label: "Repair" }
+                ]
+            },
+            {
+                title: "Growing Franchises",
+                desc: "Unified voice for multiple locations. Centralized booking and consistent branding across all your branches.",
+                icon: "building",
+                color: "text-purple-400",
+                orbitItems: [
+                    { icon: "map-pin", label: "Multi-Loc" },
+                    { icon: "users", label: "Teams" },
+                    { icon: "bar-chart", label: "Analytics" },
+                    { icon: "share-2", label: "Sync" }
+                ]
+            },
+            {
+                title: "Global Enterprises",
+                desc: "Enterprise-grade security, custom integrations, and dedicated support for high-volume call centers.",
+                icon: "globe",
+                color: "text-green-400",
+                orbitItems: [
+                    { icon: "shield", label: "Security" },
+                    { icon: "server", label: "API" },
+                    { icon: "headphones", label: "Support" },
+                    { icon: "cpu", label: "AI Core" }
+                ]
+            }
+        ];
+
+        function selectTier(index) {
+            const data = tierData[index];
+            
+            // Update Active Box State
+            document.querySelectorAll('.tier-box').forEach((box, i) => {
+                if (i === index) box.classList.add('active');
+                else box.classList.remove('active');
+            });
+
+            // Update Center Hub
+            document.getElementById('tier-title').textContent = data.title;
+            document.getElementById('tier-desc').textContent = data.desc;
+            
+            const iconContainer = document.getElementById('tier-icon-container');
+            iconContainer.innerHTML = `<i data-lucide="${data.icon}" class="w-12 h-12 ${data.color}"></i>`;
+            
+            // Update Orbit Items
+            const orbitContainer = document.getElementById('orbit-container');
+            orbitContainer.innerHTML = '';
+            
+            data.orbitItems.forEach((item, i) => {
+                const angle = (i * 90) * (Math.PI / 180); // 4 items -> 90 deg apart
+                
+                const el = document.createElement('div');
+                el.className = "absolute w-16 h-16 bg-gray-900 border border-gray-700 rounded-full flex flex-col items-center justify-center shadow-lg animate-spin-reverse";
+                
+                // CSS Positioning for circle
+                // top: 50% + sin(angle)*r, left: 50% + cos(angle)*r
+                // We use percentage logic relative to container size (800px)
+                // Radius is 50% (to edge) but we want them on the border.
+                
+                const top = 50 + 50 * Math.sin(angle);
+                const left = 50 + 50 * Math.cos(angle);
+                
+                el.style.top = `${top}%`;
+                el.style.left = `${left}%`;
+                el.style.transform = `translate(-50%, -50%)`; // Center the element itself
+                
+                el.innerHTML = `
+                    <i data-lucide="${item.icon}" class="w-6 h-6 ${data.color} mb-1"></i>
+                    <span class="text-[10px] text-gray-300 font-bold">${item.label}</span>
+                `;
+                
+                orbitContainer.appendChild(el);
+            });
+            
+            lucide.createIcons();
+            
+            // Update Mobile Stack
+            const mobileStack = document.getElementById('mobile-stack');
+            mobileStack.innerHTML = '';
+            data.orbitItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "flex items-center gap-4 bg-gray-900/50 p-4 rounded-lg border border-gray-800";
+                div.innerHTML = `
+                    <div class="p-2 bg-gray-800 rounded-lg ${data.color}">
+                        <i data-lucide="${item.icon}" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-white font-medium">${item.label}</span>
+                `;
+                mobileStack.appendChild(div);
+            });
+            lucide.createIcons();
+        }
+
+        // Initialize on Load
+        window.onload = () => {
+            selectTier(0);
+        };
+    </script>
+</body>
+</html>

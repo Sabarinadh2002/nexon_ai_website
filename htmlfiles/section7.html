@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexon-AI - All In One</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505; /* Deep black */
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Custom Gradient for text */
+        .gradient-text {
+            background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Shooting star animation */
+        @keyframes shootingStar {
+            0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 1; }
+            100% { transform: translateX(-500px) translateY(500px) rotate(-45deg); opacity: 0; }
+        }
+        .shooting-star {
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,1), transparent);
+            opacity: 0;
+            animation: shootingStar 2s linear infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-black flex items-center justify-center">
+
+    <!-- SECTION 7: ALL IN ONE (Shooting Stars Background) -->
+    <section class="relative py-32 overflow-hidden bg-black flex flex-col items-center justify-center min-h-[600px] w-full">
+        
+        <!-- Stars & Shooting Stars Containers -->
+        <canvas id="stars-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+        <div id="shooting-stars-container" class="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-hidden"></div>
+
+        <div class="relative z-20 container mx-auto px-4">
+            
+            <div class="text-center mb-16">
+                <!-- Heading -->
+                <h2 class="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight mb-6">
+                    <span class="text-white">All in</span> <span class="gradient-text">One.</span>
+                </h2>
+                
+                <!-- Content Placeholder -->
+                <p class="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+                    Everything you need to manage calls, bookings, and customer relationships in a single, powerful platform.
+                </p>
+            </div>
+
+            <!-- BENTO GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                
+                <!-- Item 1: Dawn of Innovation -->
+                <div class="group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
+                    <div class="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800"></div>
+                    <div class="transition duration-200 group-hover/bento:translate-x-2">
+                        <i data-lucide="clipboard-copy" class="h-4 w-4 text-neutral-500"></i>
+                        <div class="mt-2 mb-2 font-sans font-bold text-neutral-200">The Dawn of Innovation</div>
+                        <div class="font-sans text-xs font-normal text-neutral-300">Explore the birth of groundbreaking ideas and inventions.</div>
+                    </div>
+                </div>
+
+                <!-- Item 2: Digital Revolution -->
+                <div class="group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
+                    <div class="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800"></div>
+                    <div class="transition duration-200 group-hover/bento:translate-x-2">
+                        <i data-lucide="file-warning" class="h-4 w-4 text-neutral-500"></i>
+                        <div class="mt-2 mb-2 font-sans font-bold text-neutral-200">The Digital Revolution</div>
+                        <div class="font-sans text-xs font-normal text-neutral-300">Dive into the transformative power of technology.</div>
+                    </div>
+                </div>
+
+                <!-- Item 3: Art of Design -->
+                <div class="group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
+                    <div class="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800"></div>
+                    <div class="transition duration-200 group-hover/bento:translate-x-2">
+                        <i data-lucide="pen-tool" class="h-4 w-4 text-neutral-500"></i>
+                        <div class="mt-2 mb-2 font-sans font-bold text-neutral-200">The Art of Design</div>
+                        <div class="font-sans text-xs font-normal text-neutral-300">Discover the beauty of thoughtful and functional design.</div>
+                    </div>
+                </div>
+
+                <!-- Item 4: Power of Communication (Span 2) -->
+                <div class="md:col-span-2 group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
+                    <div class="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800"></div>
+                    <div class="transition duration-200 group-hover/bento:translate-x-2">
+                        <i data-lucide="columns" class="h-4 w-4 text-neutral-500"></i>
+                        <div class="mt-2 mb-2 font-sans font-bold text-neutral-200">The Power of Communication</div>
+                        <div class="font-sans text-xs font-normal text-neutral-300">Understand the impact of effective communication in our lives.</div>
+                    </div>
+                </div>
+
+                <!-- Item 5: Pursuit of Knowledge -->
+                <div class="group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
+                    <div class="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800"></div>
+                    <div class="transition duration-200 group-hover/bento:translate-x-2">
+                        <i data-lucide="trending-up" class="h-4 w-4 text-neutral-500"></i>
+                        <div class="mt-2 mb-2 font-sans font-bold text-neutral-200">The Pursuit of Knowledge</div>
+                        <div class="font-sans text-xs font-normal text-neutral-300">Join the quest for understanding and enlightenment.</div>
+                    </div>
+                </div>
+
+                <!-- Item 6: Joy of Creation -->
+                <div class="group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
+                    <div class="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800"></div>
+                    <div class="transition duration-200 group-hover/bento:translate-x-2">
+                        <i data-lucide="box" class="h-4 w-4 text-neutral-500"></i>
+                        <div class="mt-2 mb-2 font-sans font-bold text-neutral-200">The Joy of Creation</div>
+                        <div class="font-sans text-xs font-normal text-neutral-300">Experience the thrill of bringing ideas to life.</div>
+                    </div>
+                </div>
+
+                <!-- Item 7: Spirit of Adventure (Span 2) -->
+                <div class="md:col-span-2 group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
+                    <div class="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800"></div>
+                    <div class="transition duration-200 group-hover/bento:translate-x-2">
+                        <i data-lucide="layout-grid" class="h-4 w-4 text-neutral-500"></i>
+                        <div class="mt-2 mb-2 font-sans font-bold text-neutral-200">The Spirit of Adventure</div>
+                        <div class="font-sans text-xs font-normal text-neutral-300">Embark on exciting journeys and thrilling discoveries.</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // --- Canvas Star Field ---
+        class StarField {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                this.stars = [];
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                this.animate();
+            }
+
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                this.initStars();
+            }
+
+            initStars() {
+                this.stars = [];
+                const count = 200;
+                for (let i = 0; i < count; i++) {
+                    this.stars.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        size: Math.random() * 1.5,
+                        opacity: Math.random(),
+                        speed: Math.random() * 0.05
+                    });
+                }
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.ctx.fillStyle = 'white';
+                
+                this.stars.forEach(star => {
+                    this.ctx.globalAlpha = star.opacity;
+                    this.ctx.beginPath();
+                    this.ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    // Twinkle
+                    star.opacity += (Math.random() - 0.5) * 0.02;
+                    if (star.opacity < 0) star.opacity = 0;
+                    if (star.opacity > 1) star.opacity = 1;
+                });
+
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // --- Shooting Stars ---
+        class ShootingStarSystem {
+            constructor(containerId) {
+                this.container = document.getElementById(containerId);
+                if (!this.container) return;
+                setInterval(() => this.spawnStar(), 2000);
+            }
+
+            spawnStar() {
+                const star = document.createElement('div');
+                star.className = 'shooting-star';
+                
+                // Random position start
+                const startY = Math.random() * (window.innerHeight / 2);
+                const startX = window.innerWidth + 100;
+                
+                star.style.top = `${startY}px`;
+                star.style.left = `${startX}px`;
+                
+                this.container.appendChild(star);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    star.remove();
+                }, 2000);
+            }
+        }
+
+        // Initialize on Load
+        window.onload = () => {
+            new StarField('stars-canvas');
+            new ShootingStarSystem('shooting-stars-container');
+        };
+    </script>
+</body>
+</html>

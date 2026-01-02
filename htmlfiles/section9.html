@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexon-AI - CTA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505; /* Deep black */
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Custom Gradient for text */
+        .gradient-text {
+            background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-black flex items-center justify-center">
+
+    <!-- SECTION 9: CTA (Dotted Glow Background) -->
+    <section class="relative w-full py-20 bg-black flex items-center justify-center overflow-hidden">
+        
+        <!-- Dotted Glow Canvas Container -->
+        <div id="dotted-glow-container" class="absolute inset-0 w-full h-full pointer-events-none" 
+             style="mask-image: radial-gradient(circle at center, black 0%, transparent 90%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 90%); opacity: 1;">
+            <canvas id="dotted-glow-canvas" class="block w-full h-full"></canvas>
+        </div>
+
+        <!-- Content -->
+        <div class="relative z-10 flex w-full flex-col items-center justify-between space-y-6 px-8 py-16 text-center md:flex-row max-w-7xl mx-auto">
+            <div class="text-left max-w-2xl">
+                <h2 class="text-4xl font-normal tracking-tight text-white sm:text-5xl">
+                    Ready to buy <br />
+                    <span class="font-bold text-white">Nexon-AI Pro?</span>
+                </h2>
+                <p class="mt-4 text-lg text-neutral-400">
+                    Unlock premium components, advanced animations, and exclusive templates to build stunning modern interfaces.
+                </p>
+            </div>
+            
+            <div class="flex flex-col gap-4 sm:flex-row">
+                <button class="inline-flex items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800 px-8 py-4 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:bg-neutral-700 hover:shadow-md hover:scale-105">
+                    View Pricing
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // --- DOTTED GLOW BACKGROUND SYSTEM ---
+        class DottedGlowSystem {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                if(!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                this.dots = [];
+                
+                // Config
+                this.gap = 10; 
+                this.radius = 1.6;
+                this.speedMin = 0.3;
+                this.speedMax = 1.6;
+                this.speedScale = 1;
+                this.opacity = 1; 
+                
+                // Colors
+                this.color = "rgba(115, 115, 115, 1)"; 
+                this.glowColor = "rgba(7, 89, 133, 1)"; 
+
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                this.animate();
+            }
+
+            resize() {
+                const rect = this.canvas.parentElement.getBoundingClientRect();
+                this.width = rect.width;
+                this.height = rect.height;
+                // Handle High DPI
+                const dpr = window.devicePixelRatio || 1;
+                this.canvas.width = this.width * dpr;
+                this.canvas.height = this.height * dpr;
+                this.ctx.scale(dpr, dpr);
+                this.canvas.style.width = `${this.width}px`;
+                this.canvas.style.height = `${this.height}px`;
+                
+                this.initDots();
+            }
+
+            initDots() {
+                this.dots = [];
+                // +2 cols/rows to ensure coverage
+                const cols = Math.ceil(this.width / this.gap) + 2;
+                const rows = Math.ceil(this.height / this.gap) + 2;
+                
+                for(let i = -1; i < cols; i++) {
+                    for(let j = -1; j < rows; j++) {
+                        const x = i * this.gap + (j % 2 === 0 ? 0 : this.gap * 0.5);
+                        const y = j * this.gap;
+                        
+                        const phase = Math.random() * Math.PI * 2;
+                        const speed = this.speedMin + Math.random() * (this.speedMax - this.speedMin);
+                        
+                        this.dots.push({ x, y, phase, speed });
+                    }
+                }
+            }
+
+            animate() {
+                if(!this.ctx) return;
+                
+                this.ctx.clearRect(0, 0, this.width, this.height);
+                
+                const time = Date.now() / 1000 * this.speedScale;
+                
+                this.dots.forEach(dot => {
+                    const mod = (time * dot.speed + dot.phase) % 2;
+                    const lin = mod < 1 ? mod : 2 - mod;
+                    const a = 0.25 + 0.55 * lin;
+                    
+                    if (a > 0.6) {
+                        const glowIntensity = (a - 0.6) / 0.4;
+                        this.ctx.shadowBlur = 6 * glowIntensity;
+                        this.ctx.shadowColor = this.glowColor;
+                    } else {
+                        this.ctx.shadowBlur = 0;
+                        this.ctx.shadowColor = 'transparent';
+                    }
+                    
+                    this.ctx.globalAlpha = a * this.opacity;
+                    this.ctx.fillStyle = this.color;
+                    
+                    this.ctx.beginPath();
+                    this.ctx.arc(dot.x, dot.y, this.radius, 0, Math.PI * 2);
+                    this.ctx.fill();
+                });
+                
+                this.ctx.globalAlpha = 1;
+
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // Initialize on Load
+        window.onload = () => {
+            new DottedGlowSystem('dotted-glow-canvas');
+        };
+    </script>
+</body>
+</html>
