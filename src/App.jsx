@@ -9,6 +9,11 @@ import Section6 from './assets/components/section6/section6'
 import Section7 from './assets/components/section7/section7'
 import Section8 from './assets/components/section8/section8'
 import Section9 from './assets/components/section9/section9'
+import Section10 from './assets/components/section10/section10'
+import WhyUs from './assets/components/why us/why_us'
+import Integration from './assets/components/integration/integration'
+import FAQ from './assets/components/FAQ/faq'
+import Footer from './assets/components/footer/footer'
 
 
 function App() {
@@ -19,12 +24,18 @@ function App() {
       <Section1 />
       <Section2 />
       <Section3 />
+      <Section7 />
+      <WhyUs />
       <Section4 />
       <Section5 />
-      <Section6 />
-      <Section7 />
-      <Section8 />
+      {/* <Section6 /> */}
+      {/* <Section10 /> */}
+      {/* <Section8 /> */}
       <Section9 />
+      <Integration />
+      <FAQ />
+      <Footer />
+      
     </>
   )
 }

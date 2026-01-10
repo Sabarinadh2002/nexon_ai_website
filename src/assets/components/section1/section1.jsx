@@ -100,14 +100,13 @@ export default function Section1() {
       </nav>
 
       {/* Main Wrapper */}
-      <main className="pt-24"> 
+      <main> 
 
         {/* SECTION 1: HERO */}
-        <section className="min-h-[90vh] flex items-center justify-center px-4 sm:px-8 lg:px-16 py-10 lg:py-0 relative overflow-hidden">
+        <section className="min-h-screen flex items-center justify-center px-4 sm:px-8 lg:px-16 pt-28 pb-10 lg:pt-20 lg:pb-0 relative overflow-hidden bg-grid" style={{ backgroundColor: '#050505', color: '#ffffff' }}>
             
-            {/* Background decorative blurs */}
-            <div className="absolute top-20 left-[-10%] w-96 h-96 bg-purple-900/30 rounded-full blur-[100px] pointer-events-none"></div>
-            <div className="absolute bottom-0 right-[-10%] w-96 h-96 bg-blue-900/20 rounded-full blur-[100px] pointer-events-none"></div>
+            {/* Dynamic Background Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none transition-colors duration-700"></div>
 
             <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center z-10">
                 
