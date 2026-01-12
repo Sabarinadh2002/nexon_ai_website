@@ -89,7 +89,7 @@ export default function Section11() {
           {/* Heading */}
           <div className="flex flex-col items-center justify-center mb-16 text-center px-4">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8">
-              Why  <span className="gradient-text">Us?</span>
+              Why choose <span className="gradient-text">Us?</span>
             </h2>
           </div>
 
