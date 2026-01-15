@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Store, Building2, Building, Calendar, Users, TrendingUp, Shield, Globe, Zap, Clock, CreditCard, BarChart3 } from 'lucide-react';
+import { Store, Building2, Building, Calendar, Users, TrendingUp, Shield, Globe, Zap, CreditCard, BarChart3 } from 'lucide-react';
 
-const ProductScaleSelector = () => {
-  const [activeScale, setActiveScale] = useState('small');
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  // Trigger a subtle re-entry animation when tab changes
-  useEffect(() => {
-    setIsAnimating(true);
-    const timer = setTimeout(() => setIsAnimating(false), 500);
-    return () => clearTimeout(timer);
-  }, [activeScale]);
-
-  const data = {
+const data = {
     small: {
       id: 'small',
       title: 'Small Scale Business',
@@ -66,9 +55,7 @@ const ProductScaleSelector = () => {
     }
   };
 
-  const activeData = data[activeScale];
-
-  const styles = `
+const styles = `
     .gradient-text {
       background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 100%);
       -webkit-background-clip: text;
@@ -109,13 +96,26 @@ const ProductScaleSelector = () => {
     }
   `;
 
+const ProductScaleSelector = () => {
+  const [activeScale, setActiveScale] = useState('small');
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  // Trigger a subtle re-entry animation when tab changes
+  useEffect(() => {
+    setIsAnimating(true);
+    const timer = setTimeout(() => setIsAnimating(false), 500);
+    return () => clearTimeout(timer);
+  }, [activeScale]);
+
+  const activeData = data[activeScale];
+
   return (
     <>
       <style>{styles}</style>
       <section className="w-full py-20 font-sans relative overflow-hidden bg-grid" style={{ backgroundColor: '#050505', color: '#ffffff' }}>
         
         {/* Dynamic Background Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-200 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
 
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           
@@ -189,12 +189,12 @@ const ProductScaleSelector = () => {
             </div>
 
             {/* RIGHT PANEL: Visualizer */}
-            <div className="w-full lg:w-2/3 relative flex items-center justify-center overflow-hidden min-h-[500px] lg:min-h-[600px]">
+            <div className="w-full lg:w-2/3 relative flex items-center justify-center overflow-hidden min-h-screen">
               
               {/* Background Decorative Circles */}
               <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
-                 <div className="w-[300px] h-[300px] md:w-[500px] md:h-[500px] rounded-full border border-gray-700" />
-                 <div className="absolute w-[450px] h-[450px] md:w-[700px] md:h-[700px] rounded-full border border-gray-800" />
+                 <div className="w-75 h-75 md:w-125] md:h-125 rounded-full border border-gray-700" />
+                 <div className="absolute w-80 h-80 md:w-96 md:h-96 rounded-full border border-gray-800" />
               </div>
 
               {/* Main Content Wrapper */}

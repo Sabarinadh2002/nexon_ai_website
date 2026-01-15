@@ -1,27 +1,7 @@
-import React, { useEffect } from 'react'
+import { ArrowRight, Play, PhoneIncoming, Phone, TrendingUp, Clock } from 'lucide-react'
+import logo2 from '../../image/logo2.svg'
 
 export default function Section1() {
-  useEffect(() => {
-    // Load Tailwind if not present
-    if (!document.querySelector('script[src="https://cdn.tailwindcss.com"]')) {
-      const script = document.createElement('script');
-      script.src = "https://cdn.tailwindcss.com";
-      document.head.appendChild(script);
-    }
-
-    // Load Lucide Icons if not present
-    if (!document.querySelector('script[src="https://unpkg.com/lucide@latest"]')) {
-      const script = document.createElement('script');
-      script.src = "https://unpkg.com/lucide@latest";
-      script.onload = () => {
-        if (window.lucide) window.lucide.createIcons();
-      };
-      document.head.appendChild(script);
-    } else if (window.lucide) {
-      window.lucide.createIcons();
-    }
-  }, []);
-
   return (
     <>
       <style>{`
@@ -83,10 +63,8 @@ export default function Section1() {
       <nav className="w-full py-6 px-4 sm:px-8 lg:px-16 flex justify-between items-center fixed top-0 left-0 bg-black/80 backdrop-blur-md z-50 border-b border-white/5">
         {/* Logo */}
         <div className="flex items-center gap-2 group cursor-pointer">
-            <div className="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
-                <i data-lucide="bot" className="text-white w-6 h-6"></i>
-            </div>
-            <span className="text-xl font-bold tracking-wide">Nexon-<span className="text-blue-400">AI</span></span>
+            <img src={logo2} alt="Nexon-AI" className="h-10 w-auto transform group-hover:rotate-12 transition-transform duration-300" />
+            <span className="text-xl font-bold tracking-wide text-white">Nexon-AI</span>
         </div>
 
         {/* Optional Nav Actions */}
@@ -106,7 +84,7 @@ export default function Section1() {
         <section className="min-h-screen flex items-center justify-center px-4 sm:px-8 lg:px-16 pt-28 pb-10 lg:pt-20 lg:pb-0 relative overflow-hidden bg-grid" style={{ backgroundColor: '#050505', color: '#ffffff' }}>
             
             {/* Dynamic Background Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none transition-colors duration-700"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-250 h-250 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none transition-colors duration-700"></div>
 
             <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center z-10">
                 
@@ -134,7 +112,7 @@ export default function Section1() {
                     <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-4">
                         <button className="w-full sm:w-auto px-8 py-4 gradient-bg rounded-lg text-white font-semibold shadow-lg hover:shadow-blue-500/25 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
                             Get Started Now
-                            <i data-lucide="arrow-right" className="w-4 h-4"></i>
+                            <ArrowRight className="w-4 h-4" />
                         </button>
                         <button className="w-full sm:w-auto px-8 py-4 bg-white/5 border border-white/10 rounded-lg text-white font-semibold hover:bg-white/10 transition-all duration-300">
                             View Pricing
@@ -144,9 +122,9 @@ export default function Section1() {
 
                 {/* Video Column */}
                 <div className="flex flex-col gap-6">
-                    <div className="relative w-full aspect-video lg:aspect-[4/3] max-h-[600px] flex items-center justify-center">
+                    <div className="relative w-full aspect-video lg:aspect-4/3 max-h-150 flex items-center justify-center">
                         {/* Decorative Elements behind video */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-purple-500 to-blue-500 rounded-2xl blur-2xl opacity-20 transform rotate-3 scale-95"></div>
+                        <div className="absolute inset-0 bg-linear-to-tr from-purple-500 to-blue-500 rounded-2xl blur-2xl opacity-20 transform rotate-3 scale-95"></div>
                         
                         {/* Video Container */}
                         <div className="relative w-full h-full gradient-border bg-gray-900/80 backdrop-blur-md rounded-2xl glow-effect overflow-hidden shadow-2xl flex flex-col group">
@@ -162,7 +140,7 @@ export default function Section1() {
                             <div className="flex-1 relative flex items-center justify-center bg-black/40 group-hover:bg-black/30 transition-colors cursor-pointer">
                                 {/* Play Button */}
                                 <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 shadow-xl group-hover:scale-110 transition-transform duration-300 z-20">
-                                    <i data-lucide="play" className="w-8 h-8 text-white fill-white ml-1"></i>
+                                    <Play className="w-8 h-8 text-white fill-white ml-1" />
                                 </div>
                                 
                                 {/* Placeholder Text */}
@@ -181,7 +159,7 @@ export default function Section1() {
                         {/* Floating Badge on Video */}
                         <div className="absolute -bottom-6 -left-6 bg-gray-900 border border-gray-800 p-4 rounded-xl shadow-xl flex items-center gap-3 animate-bounce" style={{ animationDuration: '3s' }}>
                             <div className="bg-green-500/20 p-2 rounded-lg">
-                                <i data-lucide="phone-incoming" className="text-green-400 w-5 h-5"></i>
+                                <PhoneIncoming className="text-green-400 w-5 h-5" />
                             </div>
                             <div>
                                 <p className="text-xs text-gray-400">Calls Handled</p>
@@ -195,7 +173,7 @@ export default function Section1() {
                         {/* Stat 1 */}
                         <div className="flex flex-col items-center justify-center text-center group">
                             <div className="p-2 mb-2 group-hover:scale-110 transition-transform">
-                                <i data-lucide="phone" className="w-6 h-6 text-blue-400"></i>
+                                <Phone className="w-6 h-6 text-blue-400" />
                             </div>
                             <h3 className="text-xl font-bold text-white">100+</h3>
                             <p className="text-[10px] text-gray-400 uppercase tracking-wider mt-1 font-medium">Calls Handled</p>
@@ -204,7 +182,7 @@ export default function Section1() {
                         {/* Stat 2 */}
                         <div className="flex flex-col items-center justify-center text-center group">
                             <div className="p-2 mb-2 group-hover:scale-110 transition-transform">
-                                <i data-lucide="trending-up" className="w-6 h-6 text-green-400"></i>
+                                <TrendingUp className="w-6 h-6 text-green-400" />
                             </div>
                             <h3 className="text-xl font-bold text-green-400">70%</h3>
                             <p className="text-[10px] text-gray-400 uppercase tracking-wider mt-1 font-medium">Boost in Business</p>
@@ -213,7 +191,7 @@ export default function Section1() {
                         {/* Stat 3 */}
                         <div className="flex flex-col items-center justify-center text-center group">
                             <div className="p-2 mb-2 group-hover:scale-110 transition-transform">
-                                <i data-lucide="clock" className="w-6 h-6 text-purple-400"></i>
+                                <Clock className="w-6 h-6 text-purple-400" />
                             </div>
                             <h3 className="text-xl font-bold text-purple-400">80%</h3>
                             <p className="text-[10px] text-gray-400 uppercase tracking-wider mt-1 font-medium">Reduce Workload</p>

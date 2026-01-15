@@ -6,7 +6,16 @@ export default function PrivacyPolicy() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#050505] text-neutral-300 font-sans selection:bg-orange-500/30">
+    <>
+      <style>{`
+        .bg-grid {
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-attachment: fixed;
+        }
+    `}</style>
+    <div className="min-h-screen bg-[#050505] text-neutral-300 font-sans selection:bg-orange-500/30 bg-grid">
       <div className="max-w-4xl mx-auto px-6 py-12 md:py-20">
         <button 
           onClick={() => navigate(-1)} 
@@ -92,6 +101,13 @@ export default function PrivacyPolicy() {
                 <h3 className="text-lg font-semibold text-white mt-6 mb-3">3.2 Data Automatically Collected</h3>
                 <p className="mb-4">We collect device information, website usage data, and call service usage metrics automatically using cookies and similar technologies.</p>
 
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">3.3 Data from Other Sources</h3>
+                <ul className="list-disc pl-5 space-y-2 mb-4 text-neutral-400">
+                    <li><strong>From Your Customers & Callers</strong>: Personal data shared through AI agents.</li>
+                    <li><strong>From Third-Party Service Providers</strong>: Analytics, marketing, payment processors.</li>
+                    <li><strong>From Public Sources</strong>: Publicly available company info.</li>
+                </ul>
+
                 <h3 className="text-lg font-semibold text-white mt-6 mb-3">3.4 Payment Information</h3>
                 <p className="mb-4">Nexon-AI does NOT directly collect or store your full payment card details. All payment processing is handled securely by <strong className="text-white">Stripe</strong>. We only store a confirmation token and the last four digits of your card.</p>
             </section>
@@ -105,6 +121,7 @@ export default function PrivacyPolicy() {
                     <li><strong>Legitimate Interest</strong>: For service improvement, marketing, security, and analytics.</li>
                     <li><strong>Consent</strong>: For marketing communications and optional tracking.</li>
                     <li><strong>Legal Obligation</strong>: For tax records and legal compliance.</li>
+                    <li><strong>Vital Interests</strong>: In rare emergencies.</li>
                 </ul>
             </section>
 
@@ -128,6 +145,10 @@ export default function PrivacyPolicy() {
                         <h4 className="text-white font-semibold mb-2">Call Data (Processor)</h4>
                         <p className="text-xs text-neutral-400">Caller details, recordings, transcripts (processed on your behalf).</p>
                     </div>
+                    <div className="bg-neutral-900/50 p-4 rounded-lg border border-neutral-800">
+                        <h4 className="text-white font-semibold mb-2">Website & Behavioral</h4>
+                        <p className="text-xs text-neutral-400">IP address, device type, cookies, page visits.</p>
+                    </div>
                 </div>
             </section>
 
@@ -143,6 +164,7 @@ export default function PrivacyPolicy() {
                         <li>Comply with UK GDPR and call recording laws.</li>
                     </ul>
                 </div>
+                <h3 className="text-lg font-semibold text-white mt-6 mb-3">6.2 Special Category Data & Biometric Data</h3>
                 <p className="mb-4"><strong>Voice Data</strong>: Voice recordings are personal data. They may contain special category data (health, etc.) if revealed by the caller. You should implement appropriate safeguards if handling sensitive information.</p>
             </section>
 
@@ -158,6 +180,7 @@ export default function PrivacyPolicy() {
                     <li><strong className="text-white">Right to Data Portability</strong>: Get your data in a portable format.</li>
                     <li><strong className="text-white">Right to Object</strong>: Object to processing or marketing.</li>
                     <li><strong className="text-white">Right to Withdraw Consent</strong>: Withdraw consent at any time.</li>
+                    <li><strong className="text-white">Rights Related to Automated Decision-Making</strong>: Request human review.</li>
                 </ul>
                 <p className="mt-4 text-sm bg-neutral-900 p-3 rounded border border-neutral-800">
                     To exercise these rights, email <a href="mailto:contact@nexon-ai.com" className="text-orange-500 hover:underline">contact@nexon-ai.com</a> with the subject line "Data Subject Access Request".
@@ -183,17 +206,22 @@ export default function PrivacyPolicy() {
                             <tr>
                                 <th className="p-3 border-b border-neutral-800">Sub-Processor</th>
                                 <th className="p-3 border-b border-neutral-800">Purpose</th>
+                                <th className="p-3 border-b border-neutral-800">Data Categories</th>
                                 <th className="p-3 border-b border-neutral-800">Location</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-neutral-800">
-                            <tr><td className="p-3">OpenAI</td><td className="p-3">AI response generation</td><td className="p-3">USA</td></tr>
-                            <tr><td className="p-3">Deepgram</td><td className="p-3">Speech-to-text</td><td className="p-3">USA</td></tr>
-                            <tr><td className="p-3">Neon PostgreSQL</td><td className="p-3">Database storage</td><td className="p-3">USA/EU</td></tr>
-                            <tr><td className="p-3">Supabase</td><td className="p-3">Real-time API & Auth</td><td className="p-3">USA/EU</td></tr>
-                            <tr><td className="p-3">AWS</td><td className="p-3">Cloud infrastructure</td><td className="p-3">USA/EU</td></tr>
-                            <tr><td className="p-3">Stripe</td><td className="p-3">Payment processing</td><td className="p-3">USA/EU</td></tr>
-                            <tr><td className="p-3">Twilio</td><td className="p-3">Telephony</td><td className="p-3">USA/EU</td></tr>
+                            <tr><td className="p-3">OpenAI</td><td className="p-3">AI response generation</td><td className="p-3">Call content</td><td className="p-3">USA</td></tr>
+                            <tr><td className="p-3">Deepgram</td><td className="p-3">Speech-to-text</td><td className="p-3">Audio/Voice</td><td className="p-3">USA</td></tr>
+                            <tr><td className="p-3">Neon PostgreSQL</td><td className="p-3">Database storage</td><td className="p-3">All personal data</td><td className="p-3">USA/EU</td></tr>
+                            <tr><td className="p-3">Supabase</td><td className="p-3">Real-time API & Auth</td><td className="p-3">Account data</td><td className="p-3">USA/EU</td></tr>
+                            <tr><td className="p-3">AWS</td><td className="p-3">Cloud infrastructure</td><td className="p-3">All data</td><td className="p-3">USA/EU</td></tr>
+                            <tr><td className="p-3">Stripe</td><td className="p-3">Payment processing</td><td className="p-3">Payment data</td><td className="p-3">USA/EU</td></tr>
+                            <tr><td className="p-3">Twilio</td><td className="p-3">Telephony</td><td className="p-3">Phone numbers</td><td className="p-3">USA/EU</td></tr>
+                            <tr><td className="p-3">Google Analytics</td><td className="p-3">Analytics</td><td className="p-3">Usage data</td><td className="p-3">USA</td></tr>
+                            <tr><td className="p-3">Hotjar</td><td className="p-3">Heatmaps</td><td className="p-3">Interaction</td><td className="p-3">USA/EU</td></tr>
+                            <tr><td className="p-3">HubSpot</td><td className="p-3">CRM</td><td className="p-3">Contact info</td><td className="p-3">USA/EU</td></tr>
+                            <tr><td className="p-3">Mailchimp</td><td className="p-3">Email marketing</td><td className="p-3">Email address</td><td className="p-3">USA</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -203,13 +231,26 @@ export default function PrivacyPolicy() {
             {/* Section 10 */}
             <section>
                 <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">10. Data Retention & Deletion</h2>
-                <p className="mb-4">We retain personal data only as long as necessary:</p>
-                <ul className="list-disc pl-5 space-y-2 mb-4 text-neutral-400">
-                    <li><strong>Account Info</strong>: Duration of contract + 6 years.</li>
-                    <li><strong>Call Recordings</strong>: 12 months (unless deleted sooner).</li>
-                    <li><strong>Payment Records</strong>: 6 years (tax compliance).</li>
-                    <li><strong>Deleted Data</strong>: Removed from active systems in 10 days, backups in 90 days.</li>
-                </ul>
+                <div className="overflow-x-auto mb-6 border border-neutral-800 rounded-lg">
+                    <table className="w-full text-left text-sm text-neutral-400">
+                        <thead className="bg-neutral-900 text-white">
+                            <tr>
+                                <th className="p-3 border-b border-neutral-800">Data Category</th>
+                                <th className="p-3 border-b border-neutral-800">Retention Period</th>
+                                <th className="p-3 border-b border-neutral-800">Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-neutral-800">
+                            <tr><td className="p-3">Account Information</td><td className="p-3">Contract + 6 years</td><td className="p-3">Legal/Tax</td></tr>
+                            <tr><td className="p-3">Payment Records</td><td className="p-3">6 years</td><td className="p-3">Tax compliance</td></tr>
+                            <tr><td className="p-3">Call Recordings</td><td className="p-3">12 months</td><td className="p-3">Quality/Compliance</td></tr>
+                            <tr><td className="p-3">Call Transcripts</td><td className="p-3">12 months</td><td className="p-3">Reference</td></tr>
+                            <tr><td className="p-3">Customer Support</td><td className="p-3">3 years</td><td className="p-3">Service improvement</td></tr>
+                            <tr><td className="p-3">Website Analytics</td><td className="p-3">26 months</td><td className="p-3">Analytics</td></tr>
+                            <tr><td className="p-3">Deleted Data</td><td className="p-3">90 days post-deletion</td><td className="p-3">Backup purging</td></tr>
+                        </tbody>
+                    </table>
+                </div>
                 <p className="mb-4"><strong>Contract Termination</strong>: Upon termination, you have 30 days to retrieve data before it is deleted.</p>
             </section>
 
@@ -235,12 +276,65 @@ export default function PrivacyPolicy() {
             <section>
                 <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">13. Cookies & Tracking</h2>
                 <p className="mb-4">We use cookies for essential functionality, analytics, and marketing. You can manage your preferences via our website or browser settings.</p>
+                
+                <div className="overflow-x-auto mb-6 border border-neutral-800 rounded-lg">
+                    <table className="w-full text-left text-sm text-neutral-400">
+                        <thead className="bg-neutral-900 text-white">
+                            <tr>
+                                <th className="p-3 border-b border-neutral-800">Cookie Type</th>
+                                <th className="p-3 border-b border-neutral-800">Purpose</th>
+                                <th className="p-3 border-b border-neutral-800">Consent Required?</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-neutral-800">
+                            <tr><td className="p-3">Session</td><td className="p-3">Maintain login state</td><td className="p-3">No</td></tr>
+                            <tr><td className="p-3">Authentication</td><td className="p-3">Keep logged in</td><td className="p-3">No</td></tr>
+                            <tr><td className="p-3">Preference</td><td className="p-3">Settings</td><td className="p-3">No</td></tr>
+                            <tr><td className="p-3">Analytics</td><td className="p-3">Track usage</td><td className="p-3">No (under DUAA 2025)</td></tr>
+                            <tr><td className="p-3">Marketing</td><td className="p-3">Retargeting</td><td className="p-3">Yes</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            {/* Section 14 */}
+            <section>
+                <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">14. Children's Privacy</h2>
+                <p className="mb-4">Our Service is intended for business users and is NOT directed at children under 18. We do not knowingly collect personal data from children.</p>
+            </section>
+
+            {/* Section 15 */}
+            <section>
+                <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">15. Your Privacy Choices</h2>
+                <ul className="list-disc pl-5 space-y-2 mb-4 text-neutral-400">
+                    <li><strong>Marketing</strong>: Unsubscribe via email link or dashboard.</li>
+                    <li><strong>Cookies</strong>: Manage via banner or browser settings.</li>
+                    <li><strong>Do Not Track</strong>: We honor DNT signals for non-essential tracking.</li>
+                </ul>
+            </section>
+
+            {/* Section 16 */}
+            <section>
+                <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">16. Third-Party Websites</h2>
+                <p className="mb-4">Our website may contain links to third-party sites. This Privacy Notice applies only to Nexon-AI. We are not responsible for third-party privacy practices.</p>
             </section>
 
             {/* Section 17 */}
             <section>
                 <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">17. Data Breach Notification</h2>
                 <p className="mb-4">In the event of a data breach, we will notify affected customers within <strong>24 hours</strong> of discovery. We will assist you with your regulatory and data subject notification obligations.</p>
+            </section>
+
+            {/* Section 18 */}
+            <section>
+                <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">18. Legal Basis & Regulatory Compliance</h2>
+                <p className="mb-4">We comply with UK GDPR, Data Protection Act 2018, PECR, and ICO guidance. You have the right to file a complaint with the UK Information Commissioner's Office (ICO).</p>
+            </section>
+
+            {/* Section 19 */}
+            <section>
+                <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">19. Amendments</h2>
+                <p className="mb-4">We may update this notice. Material changes will be notified via email with 30 days' notice.</p>
             </section>
 
             {/* Section 20 */}
@@ -254,8 +348,31 @@ export default function PrivacyPolicy() {
                 </div>
             </section>
 
+            {/* Section 21 */}
+            <section>
+                <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">21. Glossary</h2>
+                <ul className="list-disc pl-5 space-y-2 mb-4 text-neutral-400 text-sm">
+                    <li><strong>Data Controller</strong>: Organization determining purpose of processing.</li>
+                    <li><strong>Data Processor</strong>: Organization processing on behalf of controller.</li>
+                    <li><strong>Personal Data</strong>: Info relating to an identified individual.</li>
+                    <li><strong>Special Category Data</strong>: Sensitive data (health, biometric, etc.).</li>
+                </ul>
+            </section>
+
+            {/* Section 22 */}
+            <section>
+                <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">22. Final Note</h2>
+                <p className="mb-4">We are committed to your privacy. If you have questions, please contact us.</p>
+                <p className="text-sm text-neutral-500 mt-8">
+                    <strong>Nexon-AI Limited</strong><br/>
+                    Effective Date: January 13, 2026<br/>
+                    Last Updated: January 13, 2026
+                </p>
+            </section>
+
         </div>
       </div>
     </div>
+    </>
   );
 }

@@ -11,7 +11,8 @@ import WhyUs from './assets/components/why us/why_us'
 import FAQ from './assets/components/FAQ/faq'
 import Footer from './assets/components/footer/footer'
 import Pricing from './assets/components/pricing/pricing'
-import PrivacyPolicy from './assets/components/PrivacyPolicy/PrivacyPolicy'
+import LegalNotice from './LegalNotice'
+import TermsOfService from './TermsOfService'
 
 function HomePage() {
   return (
@@ -35,13 +36,32 @@ function HomePage() {
   )
 }
 
+function PrivacyPage() {
+  return (
+    <>
+      <LegalNotice />
+      <Footer />
+    </>
+  )
+}
+
+function TermsPage() {
+  return (
+    <>
+      <TermsOfService />
+      <Footer />
+    </>
+  )
+}
+
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/privacy-policy" element={<><PrivacyPolicy /><Footer /></>} />
+      <Route path="/legal-notice" element={<PrivacyPage />} />
+      <Route path="/terms-of-service" element={<TermsPage />} />
     </Routes>
   )
 }

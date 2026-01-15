@@ -39,7 +39,7 @@ const Pricing = () => {
             </style>
 
             <div className="flex flex-col items-center py-16 px-4 relative overflow-hidden bg-grid" style={{ backgroundColor: '#050505' }}>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-orange-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-screen max-w-[800px] max-h-[800px] bg-orange-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
                 <h1 className="text-3xl md:text-4xl text-center mb-3 text-white relative z-10">Launch free today. Scale anytime.</h1>
                 <p className="text-neutral-400 text-center mb-8 text-sm relative z-10">No credit card required. Upgrade only when<br className="hidden md:block" /> you need more.</p>
