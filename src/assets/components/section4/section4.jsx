@@ -61,11 +61,24 @@ const styles = `
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .bg-grid {
+    .bg-grid-scale {
       background-size: 50px 50px;
       background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
                         linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-      background-position: center top;
+      background-position: center center !important;
+    }
+    .section4-spotlight {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) !important;
+      width: 1000px;
+      height: 1000px;
+      background-color: rgba(37, 99, 235, 0.1);
+      border-radius: 9999px;
+      filter: blur(120px);
+      pointer-events: none;
+      transition: background-color 0.7s;
     }
     @keyframes orbit-spin {
       from { transform: rotate(0deg); }
@@ -112,10 +125,10 @@ const ProductScaleSelector = () => {
   return (
     <>
       <style>{styles}</style>
-      <section className="w-full py-20 font-sans relative overflow-hidden bg-grid" style={{ backgroundColor: '#050505', color: '#ffffff' }}>
+      <section className="w-full py-20 font-sans relative overflow-hidden bg-grid-scale" style={{ backgroundColor: '#050505', color: '#ffffff' }}>
         
         {/* Dynamic Background Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-200 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="section4-spotlight"></div>
 
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           
@@ -189,7 +202,7 @@ const ProductScaleSelector = () => {
             </div>
 
             {/* RIGHT PANEL: Visualizer */}
-            <div className="w-full lg:w-2/3 relative flex items-center justify-center overflow-hidden min-h-screen">
+            <div className="w-full lg:w-2/3 relative flex items-center justify-center overflow-hidden h-[600px]">
               
               {/* Background Decorative Circles */}
               <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">

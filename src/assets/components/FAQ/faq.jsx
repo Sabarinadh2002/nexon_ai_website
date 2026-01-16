@@ -46,16 +46,30 @@ export default function FAQ() {
                     font-family: 'Poppins', sans-serif;
                 }
 
-                .bg-grid {
+                .bg-grid-faq {
                     background-size: 50px 50px;
                     background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
                                       linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-                    background-attachment: fixed;
+                    background-position: center center !important;
+                }
+
+                .faq-spotlight {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%) !important;
+                    width: 1000px;
+                    height: 1000px;
+                    background-color: rgba(147, 51, 234, 0.1);
+                    border-radius: 9999px;
+                    filter: blur(120px);
+                    pointer-events: none;
+                    transition: background-color 0.7s;
                 }
             `}</style>
-            <section className="w-full py-20 relative overflow-hidden bg-grid" style={{ backgroundColor: '#050505', color: '#ffffff' }}>
+            <section className="w-full py-20 relative overflow-hidden bg-grid-faq" style={{ backgroundColor: '#050505', color: '#ffffff' }}>
                 {/* Dynamic Background Glow */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none transition-colors duration-700"></div>
+                <div className="faq-spotlight"></div>
                 
                 <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center justify-center px-4 md:px-0">
                     <p className="text-indigo-400 text-sm font-medium">FAQ's</p>

@@ -22,11 +22,25 @@ export default function Section11() {
       -webkit-text-fill-color: transparent;
     }
 
-    .bg-grid {
+    .bg-grid-whyus {
       background-size: 50px 50px;
       background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
                         linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-      background-position: center top;
+      background-position: center center !important;
+    }
+
+    .whyus-spotlight {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) !important;
+      width: 1000px;
+      height: 1000px;
+      background-color: rgba(147, 51, 234, 0.1);
+      border-radius: 9999px;
+      filter: blur(120px);
+      pointer-events: none;
+      transition: background-color 0.7s;
     }
   `
 
@@ -81,9 +95,9 @@ export default function Section11() {
   return (
     <>
       <style>{styles}</style>
-      <section className="w-full py-20 font-sans relative overflow-hidden bg-grid" style={{ backgroundColor: '#050505', color: '#ffffff' }}>
+      <section className="w-full py-20 font-sans relative overflow-hidden bg-grid-whyus" style={{ backgroundColor: '#050505', color: '#ffffff' }}>
         {/* Dynamic Background Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none transition-colors duration-700"></div>
+        <div className="whyus-spotlight"></div>
         
         <div className="relative z-10">
           {/* Heading */}

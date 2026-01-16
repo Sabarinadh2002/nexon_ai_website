@@ -33,11 +33,25 @@ export default function Section2() {
         }
 
         /* Subtle grid background pattern */
-        .bg-grid {
+        .bg-grid-section2 {
             background-size: 50px 50px;
             background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
                               linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-attachment: fixed;
+            background-position: center center !important;
+        }
+
+        .section2-spotlight {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) !important;
+            width: 1000px;
+            height: 1000px;
+            background-color: rgba(147, 51, 234, 0.1);
+            border-radius: 9999px;
+            filter: blur(120px);
+            pointer-events: none;
+            transition: background-color 0.7s;
         }
 
         /* Card Hover Glow & Transitions */
@@ -52,9 +66,12 @@ export default function Section2() {
         }
       `}</style>
 
-      <div className="min-h-screen bg-grid flex items-center justify-center bg-[#050505] text-white font-sans">
+      <div className="w-full bg-grid-section2 bg-[#050505] text-white font-sans relative overflow-hidden">
+        {/* Dynamic Background Glow */}
+        <div className="section2-spotlight"></div>
+
         {/* SECTION 2: HOW IT WORKS */}
-        <section className="py-24 px-4 sm:px-8 lg:px-16 relative w-full">
+        <section className="py-12 px-4 sm:px-8 lg:px-16 relative w-full z-10">
              <div className="container mx-auto">
                 
                 {/* Section Header */}

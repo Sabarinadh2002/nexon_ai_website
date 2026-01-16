@@ -30,16 +30,29 @@ const Pricing = () => {
                     *{
                     font-family: "Poppins", sans-serif;
                 }
-                    .bg-grid {
+                    .bg-grid-pricing {
                         background-size: 50px 50px;
                         background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
                                         linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-                        background-position: center top;
+                        background-position: center center !important;
+                    }
+                    .pricing-spotlight {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%) !important;
+                        width: 1000px;
+                        height: 1000px;
+                        background-color: rgba(249, 115, 22, 0.1);
+                        border-radius: 9999px;
+                        filter: blur(120px);
+                        pointer-events: none;
+                        transition: background-color 0.7s;
                     }`}
             </style>
 
-            <div className="flex flex-col items-center py-16 px-4 relative overflow-hidden bg-grid" style={{ backgroundColor: '#050505' }}>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-screen max-w-[800px] max-h-[800px] bg-orange-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+            <div className="flex flex-col items-center py-16 px-4 relative overflow-hidden bg-grid-pricing" style={{ backgroundColor: '#050505' }}>
+                <div className="pricing-spotlight"></div>
 
                 <h1 className="text-3xl md:text-4xl text-center mb-3 text-white relative z-10">Launch free today. Scale anytime.</h1>
                 <p className="text-neutral-400 text-center mb-8 text-sm relative z-10">No credit card required. Upgrade only when<br className="hidden md:block" /> you need more.</p>

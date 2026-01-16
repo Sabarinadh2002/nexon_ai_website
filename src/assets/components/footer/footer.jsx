@@ -13,17 +13,31 @@ export default function Footer() {
                     font-family: 'Poppins', sans-serif;
                 }
 
-                .bg-grid {
+                .bg-grid-footer {
                     background-size: 50px 50px;
                     background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
                                       linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-                    background-attachment: fixed;
+                    background-position: center center !important;
+                }
+
+                .footer-spotlight {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%) !important;
+                    width: 1000px;
+                    height: 1000px;
+                    background-color: rgba(147, 51, 234, 0.1);
+                    border-radius: 9999px;
+                    filter: blur(120px);
+                    pointer-events: none;
+                    transition: background-color 0.7s;
                 }
             `}</style>
             
-            <footer className="relative w-full py-16 px-6 md:px-16 lg:px-24 xl:px-32 text-[13px] text-gray-500 bg-grid overflow-hidden border-t border-white/10" style={{ backgroundColor: '#050505' }}>
+            <footer className="relative w-full py-16 px-6 md:px-16 lg:px-24 xl:px-32 text-[13px] text-gray-500 bg-grid-footer overflow-hidden border-t border-white/10" style={{ backgroundColor: '#050505' }}>
                 {/* Dynamic Background Glow */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none transition-colors duration-700"></div>
+                <div className="footer-spotlight"></div>
 
                 <div className="relative z-10 flex flex-wrap justify-center lg:justify-between gap-10 md:gap-20">
                     <div className="flex flex-wrap items-start gap-10 md:gap-[60px] xl:gap-[140px]">
