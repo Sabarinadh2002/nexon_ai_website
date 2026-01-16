@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Smile, Wrench, Home, Hammer, Mic } from 'lucide-react';
 
 const demoData = {
@@ -9,6 +9,7 @@ const demoData = {
     icon: <Smile className="w-6 h-6" />,
     colorClass: "text-cyan-400",
     bgClass: "bg-cyan-500",
+    bgGradient: "from-cyan-500/20 to-cyan-900/20"
   },
   plumber: {
     title: "Emergency Plumbing Bot",
@@ -17,6 +18,7 @@ const demoData = {
     icon: <Wrench className="w-6 h-6" />,
     colorClass: "text-blue-400",
     bgClass: "bg-blue-500",
+    bgGradient: "from-blue-500/20 to-blue-900/20"
   },
   realestate: {
     title: "Luxury Estate Agent",
@@ -25,6 +27,7 @@ const demoData = {
     icon: <Home className="w-6 h-6" />,
     colorClass: "text-yellow-400",
     bgClass: "bg-yellow-500",
+    bgGradient: "from-yellow-500/20 to-yellow-900/20"
   },
   roofer: {
     title: "Roofing Specialist",
@@ -33,6 +36,7 @@ const demoData = {
     icon: <Hammer className="w-6 h-6" />,
     colorClass: "text-orange-400",
     bgClass: "bg-orange-500",
+    bgGradient: "from-orange-500/20 to-orange-900/20"
   }
 };
 
@@ -125,29 +129,29 @@ export default function Section3() {
         }
       `}</style>
 
-      <div className="w-full bg-grid-section3 bg-[#050505] text-white font-sans relative">
+      <div className="w-full bg-grid-section3 bg-[#050505] text-white font-sans relative min-h-screen flex items-center">
         {/* SECTION 3: TRY DEMO */}
-        <section id="demo-section" className="py-12 px-4 sm:px-8 lg:px-16 relative overflow-hidden transition-colors duration-700 w-full max-w-7xl mx-auto">
-            
+        <section id="demo-section" className="py-12 px-4 sm:px-8 lg:px-16 relative overflow-hidden transition-colors duration-700 w-full max-w-7xl mx-auto pb-32 lg:pb-12">
+
             {/* Dynamic Ambient Background */}
-            <div 
-              id="ambient-glow" 
+            <div
+              id="ambient-glow"
               className={`section3-spotlight ${currentData.glowColor}`}
             ></div>
 
             <div className="container mx-auto relative z-10">
-                <div className="text-center mb-16">
+                <div className="text-center mb-12 lg:mb-16">
                     <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Experience the <span className="gradient-text">Difference</span></h2>
                     <p className="text-gray-400">Select an industry to hear how Nexon-AI handles real-world calls.</p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-                    
+
                     {/* Left Side: Industry Selectors (4 Cols) */}
-                    <div className="lg:col-span-5 space-y-4">
-                        
+                    <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+
                         {/* Dental Clinic */}
-                        <div 
+                        <div
                           className={`industry-box cursor-pointer bg-gray-900/40 border border-gray-800 rounded-xl p-5 hover:border-gray-600 transition-all duration-300 ${activeIndustry === 'dental' ? 'active' : ''}`}
                           onClick={() => setActiveIndustry('dental')}
                         >
@@ -167,7 +171,7 @@ export default function Section3() {
                         </div>
 
                         {/* Plumber */}
-                        <div 
+                        <div
                           className={`industry-box cursor-pointer bg-gray-900/40 border border-gray-800 rounded-xl p-5 hover:border-gray-600 transition-all duration-300 ${activeIndustry === 'plumber' ? 'active' : ''}`}
                           onClick={() => setActiveIndustry('plumber')}
                         >
@@ -187,7 +191,7 @@ export default function Section3() {
                         </div>
 
                         {/* Real Estate */}
-                        <div 
+                        <div
                           className={`industry-box cursor-pointer bg-gray-900/40 border border-gray-800 rounded-xl p-5 hover:border-gray-600 transition-all duration-300 ${activeIndustry === 'realestate' ? 'active' : ''}`}
                           onClick={() => setActiveIndustry('realestate')}
                         >
@@ -207,7 +211,7 @@ export default function Section3() {
                         </div>
 
                         {/* Roofer */}
-                        <div 
+                        <div
                           className={`industry-box cursor-pointer bg-gray-900/40 border border-gray-800 rounded-xl p-5 hover:border-gray-600 transition-all duration-300 ${activeIndustry === 'roofer' ? 'active' : ''}`}
                           onClick={() => setActiveIndustry('roofer')}
                         >
@@ -228,35 +232,86 @@ export default function Section3() {
 
                     </div>
 
-                    {/* Right Side: Voice Simulator (8 Cols) - MINIMALIST */}
-                    <div className="lg:col-span-7 flex flex-col items-center justify-center min-h-[500px]">
-                        
-                        {/* Orb Container */}
-                        <div className="relative w-64 h-64 flex items-center justify-center mb-6">
-                            
-                            {/* Outer pulsing rings - Extra transparent */}
-                            <div className={`pulse-circle ${currentData.colorClass} opacity-10`} style={{ animationDelay: '0s' }}></div>
-                            <div className={`pulse-circle ${currentData.colorClass} opacity-10`} style={{ animationDelay: '1s' }}></div>
-                            <div className={`pulse-circle ${currentData.colorClass} opacity-10`} style={{ animationDelay: '2s' }}></div>
-                            
-                            {/* Center Orb with Mic */}
-                            <div className={`w-40 h-40 rounded-full ${currentData.bgClass} shadow-[0_0_60px_rgba(0,0,0,0.5)] flex items-center justify-center relative z-10 transition-colors duration-500`}>
-                                <Mic className="w-16 h-16 text-white" />
+                    {/* Right Side: Voice Simulator */}
+                    <div className="lg:col-span-7">
+
+                        {/* ==============================================
+                            DESKTOP VIEW: LARGE ORB
+                            Visible only on lg screens
+                        ============================================== */}
+                        <div className="hidden lg:flex flex-col items-center justify-center min-h-[500px]">
+                            {/* Orb Container */}
+                            <div className="relative w-64 h-64 flex items-center justify-center mb-6">
+                                {/* Outer pulsing rings */}
+                                <div className={`pulse-circle ${currentData.colorClass} opacity-10`} style={{ animationDelay: '0s' }}></div>
+                                <div className={`pulse-circle ${currentData.colorClass} opacity-10`} style={{ animationDelay: '1s' }}></div>
+                                <div className={`pulse-circle ${currentData.colorClass} opacity-10`} style={{ animationDelay: '2s' }}></div>
+
+                                {/* Center Orb with Mic */}
+                                <div className={`w-40 h-40 rounded-full ${currentData.bgClass} shadow-[0_0_60px_rgba(0,0,0,0.5)] flex items-center justify-center relative z-10 transition-colors duration-500`}>
+                                    <Mic className="w-16 h-16 text-white" />
+                                </div>
+                            </div>
+
+                            {/* Wave Animation Below Mic */}
+                            <div className="relative w-96 h-20 overflow-hidden opacity-90">
+                                <svg viewBox="0 0 200 20" className={`absolute top-0 left-0 w-[200%] h-full fill-none ${currentData.colorClass} animate-wave-left`}>
+                                    <path d="M0 10 Q 25 0 50 10 T 100 10 T 150 10 T 200 10 T 250 10 T 300 10 T 350 10 T 400 10" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                </svg>
+                                <svg viewBox="0 0 200 20" className={`absolute top-0 left-0 w-[200%] h-full fill-none ${currentData.colorClass} animate-wave-right`}>
+                                    <path d="M0 10 Q 25 20 50 10 T 100 10 T 150 10 T 200 10 T 250 10 T 300 10 T 350 10 T 400 10" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                </svg>
                             </div>
                         </div>
 
-                        {/* Wave Animation Below Mic - 2 Intersecting Lines */}
-                        <div className="relative w-96 h-20 overflow-hidden opacity-90">
-                             
-                             {/* Line 1 - Moving Left - Peaks Up */}
-                             <svg viewBox="0 0 200 20" className={`absolute top-0 left-0 w-[200%] h-full fill-none ${currentData.colorClass} animate-wave-left`}>
-                                <path d="M0 10 Q 25 0 50 10 T 100 10 T 150 10 T 200 10 T 250 10 T 300 10 T 350 10 T 400 10" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-                             </svg>
-                             
-                             {/* Line 2 - Moving Right - Peaks Down (Inverted) */}
-                             <svg viewBox="0 0 200 20" className={`absolute top-0 left-0 w-[200%] h-full fill-none ${currentData.colorClass} animate-wave-right`}>
-                                <path d="M0 10 Q 25 20 50 10 T 100 10 T 150 10 T 200 10 T 250 10 T 300 10 T 350 10 T 400 10" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-                             </svg>
+                        {/* ==============================================
+                            MOBILE VIEW: RECTANGULAR TALK BOX
+                            Visible only on small screens (<lg)
+                            Fixed at bottom of screen like an assistant
+                        ============================================== */}
+                        <div className="lg:hidden fixed bottom-6 left-4 right-4 z-50 animate-in slide-in-from-bottom-10 fade-in duration-500">
+                            {/* Glow Effect behind box */}
+                            <div className={`absolute inset-0 blur-xl opacity-40 ${currentData.bgClass} rounded-2xl`}></div>
+
+                            {/* The Box itself */}
+                            <div className="relative bg-[#111] border border-white/10 rounded-2xl p-4 shadow-2xl flex items-center gap-4 overflow-hidden backdrop-blur-xl">
+
+                                {/* Left: Active Mic Indicator */}
+                                <div className={`relative flex-shrink-0 w-12 h-12 rounded-full ${currentData.bgClass} flex items-center justify-center shadow-lg`}>
+                                    <div className="absolute inset-0 rounded-full border border-white/20 animate-ping opacity-50"></div>
+                                    <Mic className="w-6 h-6 text-white relative z-10" />
+                                </div>
+
+                                {/* Middle: Text Info */}
+                                <div className="flex-1 min-w-0 z-10">
+                                    <h3 className={`font-bold text-base truncate ${currentData.colorClass}`}>{currentData.title}</h3>
+                                    <div className="flex items-center gap-2">
+                                        <span className="relative flex h-2 w-2">
+                                          <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${currentData.bgClass} opacity-75`}></span>
+                                          <span className={`relative inline-flex rounded-full h-2 w-2 ${currentData.bgClass}`}></span>
+                                        </span>
+                                        <p className="text-xs text-gray-400 font-medium">AI Agent Listening...</p>
+                                    </div>
+                                </div>
+
+                                {/* Background: Wave Animation (Compressed) */}
+                                <div className="absolute inset-0 flex items-center justify-end opacity-20 pointer-events-none">
+                                    <div className="relative w-full h-full overflow-hidden">
+                                         <svg viewBox="0 0 200 20" className={`absolute top-1/2 -translate-y-1/2 right-0 w-[150%] h-24 fill-none ${currentData.colorClass} animate-wave-left`}>
+                                            <path d="M0 10 Q 25 0 50 10 T 100 10 T 150 10 T 200 10 T 250 10 T 300 10 T 350 10 T 400 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                                         </svg>
+                                    </div>
+                                </div>
+
+                                {/* Right: Visualizer Bars (Static Simulation) */}
+                                <div className="flex gap-1 h-6 items-center z-10">
+                                    <div className={`w-1 bg-white/50 rounded-full animate-pulse h-3`} style={{ animationDelay: '0s' }}></div>
+                                    <div className={`w-1 bg-white/50 rounded-full animate-pulse h-6`} style={{ animationDelay: '0.1s' }}></div>
+                                    <div className={`w-1 bg-white/50 rounded-full animate-pulse h-4`} style={{ animationDelay: '0.2s' }}></div>
+                                    <div className={`w-1 bg-white/50 rounded-full animate-pulse h-5`} style={{ animationDelay: '0.3s' }}></div>
+                                </div>
+
+                            </div>
                         </div>
 
                     </div>
