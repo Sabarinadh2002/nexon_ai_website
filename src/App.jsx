@@ -13,6 +13,8 @@ import Footer from './assets/components/footer/footer'
 import Pricing from './assets/components/pricing/pricing'
 import LegalNotice from './LegalNotice'
 import TermsOfService from './TermsOfService'
+import Waitlist2 from './assets/components/waitinglist/waitinglisting'
+
 
 function HomePage() {
   return (
@@ -27,7 +29,9 @@ function HomePage() {
       {/* <Section6 /> */}
       {/* <Section10 /> */}
       {/* <Section8 /> */}
-      <Section9 />
+      {/* <Section9 /> */}
+      <Waitlist2 />
+      
       {/* <Pricing /> */}
       {/* <Integration /> */}
       <FAQ />

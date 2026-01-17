@@ -1,13 +1,51 @@
-import React, { useEffect, useRef } from 'react'
-import { useExternalScripts } from '../useExternalScripts'
+import React, { useEffect, useRef, useState } from 'react';
+import { ShieldAlert, FileWarning, Zap, Phone, FileUp, Columns, Globe2 } from 'lucide-react';
 
 export default function Section7() {
-  useExternalScripts();
   const canvasRef = useRef(null);
   const shootingStarsRef = useRef(null);
   const securityRef = useRef(null);
   const mapSvgRef = useRef(null);
+  
+  // -- Script Loading Helper --
+  // Instead of a custom hook, we handle script injection here to ensure it works standalone.
+  useEffect(() => {
+    const loadScript = (src) => {
+      return new Promise((resolve, reject) => {
+        if (document.querySelector(`script[src="${src}"]`)) {
+          resolve();
+          return;
+        }
+        const script = document.createElement('script');
+        script.src = src;
+        script.async = true;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.body.appendChild(script);
+      });
+    };
 
+    const loadStyles = (href) => {
+      if (!document.querySelector(`link[href="${href}"]`)) {
+        const link = document.createElement('link');
+        link.href = href;
+        link.rel = 'stylesheet';
+        document.head.appendChild(link);
+      }
+    };
+
+    // Load FontAwesome
+    loadStyles('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+    // Load GSAP
+    loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js')
+      .then(() => {
+        // Dispatch event or set state if needed, but the main logic checks window.gsap
+      })
+      .catch((err) => console.error("Failed to load GSAP", err));
+  }, []);
+
+  // -- Star Background Logic --
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -30,12 +68,14 @@ export default function Section7() {
     };
 
     const resize = () => {
+      if (!canvas) return;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       initStars();
     };
 
     const animate = () => {
+      if (!canvas || !ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = 'white';
       
@@ -55,7 +95,10 @@ export default function Section7() {
     };
 
     window.addEventListener('resize', resize);
-    resize();
+    // Initial size
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initStars();
     animate();
 
     return () => {
@@ -64,6 +107,7 @@ export default function Section7() {
     };
   }, []);
 
+  // -- Shooting Stars Logic --
   useEffect(() => {
     const container = shootingStarsRef.current;
     if (!container) return;
@@ -83,7 +127,7 @@ export default function Section7() {
       
       // Remove after animation
       setTimeout(() => {
-        if (container.contains(star)) {
+        if (container && container.contains(star)) {
             container.removeChild(star);
         }
       }, 2000);
@@ -94,132 +138,124 @@ export default function Section7() {
     return () => clearInterval(intervalId);
   }, []);
 
+  // -- GSAP Animations (Security Section) --
   useEffect(() => {
-    // Load FontAwesome
-    if (!document.querySelector('link[href*="font-awesome"]')) {
-        const link = document.createElement('link');
-        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
-        link.rel = 'stylesheet';
-        document.head.appendChild(link);
-    }
-
-    // Load GSAP and run animation
     let tl;
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js';
-    script.async = true;
-    script.onload = () => {
-        if (!window.gsap || !securityRef.current) return;
-        const gsap = window.gsap;
-        
-        // Setup GSAP Timeline
-        tl = gsap.timeline({
-            repeat: -1,      // Infinite loop
-            repeatDelay: 0.5 // Short pause before restarting
-        });
-
-        const sceneGdpr = securityRef.current.querySelector('#sec7-scene-gdpr');
-        const sceneE2ee = securityRef.current.querySelector('#sec7-scene-e2ee');
-        const sceneCloud = securityRef.current.querySelector('#sec7-scene-cloud');
-        const progressBar = securityRef.current.querySelector('#sec7-main-progress');
-
-        // Reset state
-        gsap.set([sceneGdpr, sceneE2ee, sceneCloud], { opacity: 0 });
-        gsap.set(progressBar, { width: "0%" });
-        
-        // --- SCENE 1: GDPR ---
-        tl.to(sceneGdpr, { opacity: 1, duration: 0.5 })
-          .to(progressBar, { width: "33%", duration: 2, ease: "power1.inOut" }, "<")
-          
-          // Animate Document In
-          .to(securityRef.current.querySelector("#sec7-gdpr-doc"), { scale: 1, duration: 0.5, ease: "back.out(1.7)" })
-          
-          // Stamp Effect
-          .to(securityRef.current.querySelector("#sec7-gdpr-shield"), { opacity: 1, scale: 1, duration: 0.4, ease: "elastic.out(1, 0.3)" }, "+=0.2")
-          .to(securityRef.current.querySelector("#sec7-gdpr-doc"), { color: "#e2e8f0", duration: 0.2 }, "<") // Lighten doc on impact
-          
-          // Text
-          .to(securityRef.current.querySelector("#sec7-scene-gdpr .sec7-label-text"), { opacity: 1, y: -10, duration: 0.5 })
-          
-          // Exit Scene 1
-          .to(sceneGdpr, { opacity: 0, scale: 0.9, y: 20, duration: 0.5, delay: 1 });
-
-
-        // --- SCENE 2: E2EE ---
-        tl.set(sceneE2ee, { opacity: 1, scale: 1, y: 0 }) // Prep scene
-          .fromTo(sceneE2ee, { opacity: 0 }, { opacity: 1, duration: 0.5 })
-          .to(progressBar, { width: "66%", duration: 3, ease: "none" }, "<")
-
-          // Start Packet Journey
-          .fromTo(securityRef.current.querySelector("#sec7-data-packet"), 
-              { left: "0%", backgroundColor: "#1e293b", borderColor: "#ffffff" }, 
-              { left: "45%", duration: 1, ease: "power1.in" }
-          )
-          
-          // Transform to Lock (Encryption happens)
-          .to(securityRef.current.querySelector("#sec7-packet-icon"), { 
-              opacity: 0, duration: 0.1, 
-              onComplete: () => { 
-                  const icon = securityRef.current.querySelector('#sec7-packet-icon');
-                  if(icon) icon.className = "fas fa-lock text-green-400 text-xs"; 
-              }
-          })
-          .to(securityRef.current.querySelector("#sec7-packet-icon"), { opacity: 1, duration: 0.1 })
-          .to(securityRef.current.querySelector("#sec7-data-packet"), { 
-              backgroundColor: "#064e3b", // Dark green
-              borderColor: "#34d399", // bright green border
-              boxShadow: "0 0 20px #34d399",
-              scale: 1.2,
-              duration: 0.3
-          }, "<")
-          
-          // Tunnel Effect visuals
-          .to(securityRef.current.querySelector("#sec7-tunnel-effect"), { opacity: 1, duration: 0.2 }, "<")
-          
-          // Text Fade In
-          .to(securityRef.current.querySelector("#sec7-scene-e2ee .sec7-label-text"), { opacity: 1, y: -10, duration: 0.5 }, "<")
-
-          // Complete Journey
-          .to(securityRef.current.querySelector("#sec7-data-packet"), { left: "100%", duration: 1, ease: "power1.out" })
-          
-          // Unlock at destination
-          .to(securityRef.current.querySelector("#sec7-data-packet"), { scale: 0, opacity: 0, duration: 0.2 })
-          
-          // Exit Scene 2
-          .to(sceneE2ee, { opacity: 0, x: -50, duration: 0.5, delay: 0.5 });
-
-
-        // --- SCENE 3: Cloud Security ---
-        tl.set(sceneCloud, { opacity: 1 })
-          .fromTo(sceneCloud, { opacity: 0 }, { opacity: 1, duration: 0.5 })
-          .to(progressBar, { width: "100%", duration: 2.5, ease: "power1.out" }, "<")
-
-          // Cloud Pops in
-          .to(securityRef.current.querySelector("#sec7-cloud-icon"), { scale: 1, duration: 0.6, ease: "elastic.out(1, 0.75)" })
-          
-          // Rings Expand
-          .to(securityRef.current.querySelector("#sec7-ring-1"), { opacity: 1, scale: 1.2, rotation: 180, duration: 1.5, ease: "power2.out" }, "-=0.4")
-          .to(securityRef.current.querySelector("#sec7-ring-2"), { opacity: 1, scale: 1.4, rotation: -180, duration: 1.5, ease: "power2.out" }, "<0.1")
-          
-          // Lock Appears inside
-          .to(securityRef.current.querySelector("#sec7-cloud-lock"), { opacity: 1, scale: 1.5, duration: 0.4, ease: "back.out" }, "-=1")
-          
-          // Pulse Effect for Security
-          .to(securityRef.current.querySelector("#sec7-cloud-icon"), { color: "#60a5fa", textShadow: "0 0 30px #3b82f6", duration: 0.5 })
-          
-          // Text
-          .to(securityRef.current.querySelector("#sec7-scene-cloud .sec7-label-text"), { opacity: 1, y: -10, duration: 0.5 })
-          
-          // Final hold and Exit for Loop
-          .to({}, { duration: 1 })
-          .to(sceneCloud, { opacity: 0, scale: 0.9, y: 20, duration: 0.5 });
-    };
+    let intervalCheck;
     
-    if (!window.gsap) {
-        document.body.appendChild(script);
-    } else {
-        script.onload();
-    }
+    // Polling for GSAP load
+    const initAnimation = () => {
+      if (!window.gsap || !securityRef.current) return;
+      clearInterval(intervalCheck);
+
+      const gsap = window.gsap;
+      
+      // Setup GSAP Timeline
+      tl = gsap.timeline({
+          repeat: -1,      // Infinite loop
+          repeatDelay: 0.5 // Short pause before restarting
+      });
+
+      const sceneGdpr = securityRef.current.querySelector('#sec7-scene-gdpr');
+      const sceneE2ee = securityRef.current.querySelector('#sec7-scene-e2ee');
+      const sceneCloud = securityRef.current.querySelector('#sec7-scene-cloud');
+      const progressBar = securityRef.current.querySelector('#sec7-main-progress');
+
+      // Reset state
+      gsap.set([sceneGdpr, sceneE2ee, sceneCloud], { opacity: 0 });
+      gsap.set(progressBar, { width: "0%" });
+      
+      // --- SCENE 1: GDPR ---
+      tl.to(sceneGdpr, { opacity: 1, duration: 0.5 })
+        .to(progressBar, { width: "33%", duration: 2, ease: "power1.inOut" }, "<")
+        
+        // Animate Document In
+        .to(securityRef.current.querySelector("#sec7-gdpr-doc"), { scale: 1, duration: 0.5, ease: "back.out(1.7)" })
+        
+        // Stamp Effect
+        .to(securityRef.current.querySelector("#sec7-gdpr-shield"), { opacity: 1, scale: 1, duration: 0.4, ease: "elastic.out(1, 0.3)" }, "+=0.2")
+        .to(securityRef.current.querySelector("#sec7-gdpr-doc"), { color: "#e2e8f0", duration: 0.2 }, "<") // Lighten doc on impact
+        
+        // Text
+        .to(securityRef.current.querySelector("#sec7-scene-gdpr .sec7-label-text"), { opacity: 1, y: -10, duration: 0.5 })
+        
+        // Exit Scene 1
+        .to(sceneGdpr, { opacity: 0, scale: 0.9, y: 20, duration: 0.5, delay: 1 });
+
+
+      // --- SCENE 2: E2EE ---
+      tl.set(sceneE2ee, { opacity: 1, scale: 1, y: 0 }) // Prep scene
+        .fromTo(sceneE2ee, { opacity: 0 }, { opacity: 1, duration: 0.5 })
+        .to(progressBar, { width: "66%", duration: 3, ease: "none" }, "<")
+
+        // Start Packet Journey
+        .fromTo(securityRef.current.querySelector("#sec7-data-packet"), 
+            { left: "0%", backgroundColor: "#1e293b", borderColor: "#ffffff" }, 
+            { left: "45%", duration: 1, ease: "power1.in" }
+        )
+        
+        // Transform to Lock (Encryption happens)
+        .to(securityRef.current.querySelector("#sec7-packet-icon"), { 
+            opacity: 0, duration: 0.1, 
+            onComplete: () => { 
+                const icon = securityRef.current.querySelector('#sec7-packet-icon');
+                if(icon) icon.className = "fas fa-lock text-green-400 text-xs"; 
+            }
+        })
+        .to(securityRef.current.querySelector("#sec7-packet-icon"), { opacity: 1, duration: 0.1 })
+        .to(securityRef.current.querySelector("#sec7-data-packet"), { 
+            backgroundColor: "#064e3b", // Dark green
+            borderColor: "#34d399", // bright green border
+            boxShadow: "0 0 20px #34d399",
+            scale: 1.2,
+            duration: 0.3
+        }, "<")
+        
+        // Tunnel Effect visuals
+        .to(securityRef.current.querySelector("#sec7-tunnel-effect"), { opacity: 1, duration: 0.2 }, "<")
+        
+        // Text Fade In
+        .to(securityRef.current.querySelector("#sec7-scene-e2ee .sec7-label-text"), { opacity: 1, y: -10, duration: 0.5 }, "<")
+
+        // Complete Journey
+        .to(securityRef.current.querySelector("#sec7-data-packet"), { left: "100%", duration: 1, ease: "power1.out" })
+        
+        // Unlock at destination
+        .to(securityRef.current.querySelector("#sec7-data-packet"), { scale: 0, opacity: 0, duration: 0.2 })
+        
+        // Exit Scene 2
+        .to(sceneE2ee, { opacity: 0, x: -50, duration: 0.5, delay: 0.5 });
+
+
+      // --- SCENE 3: Cloud Security ---
+      tl.set(sceneCloud, { opacity: 1 })
+        .fromTo(sceneCloud, { opacity: 0 }, { opacity: 1, duration: 0.5 })
+        .to(progressBar, { width: "100%", duration: 2.5, ease: "power1.out" }, "<")
+
+        // Cloud Pops in
+        .to(securityRef.current.querySelector("#sec7-cloud-icon"), { scale: 1, duration: 0.6, ease: "elastic.out(1, 0.75)" })
+        
+        // Rings Expand
+        .to(securityRef.current.querySelector("#sec7-ring-1"), { opacity: 1, scale: 1.2, rotation: 180, duration: 1.5, ease: "power2.out" }, "-=0.4")
+        .to(securityRef.current.querySelector("#sec7-ring-2"), { opacity: 1, scale: 1.4, rotation: -180, duration: 1.5, ease: "power2.out" }, "<0.1")
+        
+        // Lock Appears inside
+        .to(securityRef.current.querySelector("#sec7-cloud-lock"), { opacity: 1, scale: 1.5, duration: 0.4, ease: "back.out" }, "-=1")
+        
+        // Pulse Effect for Security
+        .to(securityRef.current.querySelector("#sec7-cloud-icon"), { color: "#60a5fa", textShadow: "0 0 30px #3b82f6", duration: 0.5 })
+        
+        // Text
+        .to(securityRef.current.querySelector("#sec7-scene-cloud .sec7-label-text"), { opacity: 1, y: -10, duration: 0.5 })
+        
+        // Final hold and Exit for Loop
+        .to({}, { duration: 1 })
+        .to(sceneCloud, { opacity: 0, scale: 0.9, y: 20, duration: 0.5 });
+    };
+
+    intervalCheck = setInterval(() => {
+      if (window.gsap) initAnimation();
+    }, 100);
 
     // Call Timer Logic
     const timerEl = document.getElementById('miniCallTime');
@@ -234,9 +270,11 @@ export default function Section7() {
     return () => {
         if (tl) tl.kill();
         clearInterval(timerInterval);
+        clearInterval(intervalCheck);
     };
   }, []);
 
+  // -- Map Logic (kept for future use if uncommented) --
   useEffect(() => {
     // Map Animation Logic
     const svg = mapSvgRef.current;
@@ -247,7 +285,7 @@ export default function Section7() {
     const dots = [
         { start: {lat: 64.2, lng: -149.5}, end: {lat: 34.0, lng: -118.2} },
         { start: {lat: 64.2, lng: -149.5}, end: {lat: -15.8, lng: -47.9} }, 
-        { start: {lat: 51.5, lng: -0.1}, end: {lat: 28.6, lng: 77.2} },    
+        { start: {lat: 51.5, lng: -0.1}, end: {lat: 28.6, lng: 77.2} },     
         { start: {lat: 28.6, lng: 77.2}, end: {lat: 43.1, lng: 131.9} }
     ];
 
@@ -293,14 +331,14 @@ export default function Section7() {
     });
   }, []);
 
+  // -- Slider Logic --
   useEffect(() => {
-    // Value Loop Slider Animation
     const container = document.getElementById('slider-container');
     if (!container) return;
 
     const slides = container.querySelectorAll('.value-slide');
     const dots = container.querySelectorAll('.value-dot');
-    const colors = ['#eff6ff', '#faf5ff', '#f0fdf4'];
+    // const colors = ['#eff6ff', '#faf5ff', '#f0fdf4'];
     const dotColors = ['#3b82f6', '#a855f7', '#10b981'];
     
     let currentIndex = 0;
@@ -366,11 +404,6 @@ export default function Section7() {
       stopAutoPlay();
     };
   }, []);
-
-  // Re-run Lucide icons when content changes
-  useEffect(() => {
-    if (window.lucide) window.lucide.createIcons();
-  });
 
   return (
     <>
@@ -1089,8 +1122,13 @@ export default function Section7() {
             align-items: center;
         }
         .sec7-icon-large {
-            font-size: 4rem;
+            font-size: 3rem;
             filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.5));
+        }
+        @media (min-width: 768px) {
+            .sec7-icon-large {
+                font-size: 4rem;
+            }
         }
         .sec7-progress-container {
             position: absolute;
@@ -1113,10 +1151,93 @@ export default function Section7() {
             opacity: 0;
             letter-spacing: 0.05em;
         }
+
+        /* --- MOBILE RESPONSIVE SCALING --- */
+        @media (max-width: 768px) {
+            /* Global Grid Adjustments */
+            .grid { gap: 0.5rem; } /* Reduce grid gap */
+
+            /* Security */
+            .sec7-icon-large { font-size: 1.5rem; }
+            .sec7-label-text { font-size: 0.7rem; bottom: -0.5rem; }
+            .sec7-progress-container { width: 70%; bottom: 0.5rem; height: 3px; }
+            
+            /* Chat */
+            .chat-container { transform: none; gap: 8px; padding: 0; }
+            .avatar { width: 20px; height: 20px; font-size: 12px; }
+            .bubble { font-size: 9px; padding: 4px 8px; max-width: 150px; border-radius: 10px; }
+            
+            /* Value Loop */
+            .value-slide { padding: 8px; }
+            .value-icon-circle { width: 32px; height: 32px; margin-bottom: 6px; box-shadow: none; }
+            .value-icon-circle svg { width: 16px; height: 16px; }
+            .value-slide-title { font-size: 10px; margin-bottom: 2px; }
+            .value-slide-desc { font-size: 7px; line-height: 1; }
+            .value-dots { bottom: -20px; gap: 4px; } 
+            .value-dot { width: 4px; height: 4px; }
+            .value-dot.active { width: 12px; }
+
+            /* Scheduling */
+            .sched-dash-card { border-width: 2px; }
+            .sched-sidebar { width: 24px; padding-top: 8px; gap: 6px; }
+            .sched-nav-icon { width: 16px; height: 16px; border-radius: 4px; }
+            .sched-nav-icon svg { width: 10px; height: 10px; }
+            .sched-main-content { padding: 8px; gap: 6px; }
+            .sched-header-text { gap: 2px; }
+            .sched-title-bar { width: 40px; height: 4px; border-radius: 2px; }
+            .sched-subtitle-bar { width: 20px; height: 3px; border-radius: 1.5px; }
+            .sched-profile { width: 16px; height: 16px; }
+            .sched-notif-dot { width: 6px; height: 6px; }
+            .sched-stat-card { padding: 6px; gap: 4px; }
+            .sched-stat-label { width: 16px; height: 3px; }
+            .sched-stat-val { font-size: 8px; transform: translateY(2px); }
+            .sched-chart-container { padding: 6px; gap: 4px; }
+            .sched-chart-header { width: 24px; height: 4px; }
+            .sched-calendar-widget { padding: 6px; gap: 4px; }
+            .sched-cal-month { width: 12px; height: 3px; }
+            .sched-cal-day { font-size: 6px; }
+            .sched-cursor { width: 10px; height: 10px; }
+
+            /* Upload */
+            .upload-card { padding: 6px; border-width: 2px; }
+            .upload-drop-zone { border-width: 1.5px; border-radius: 8px; }
+            .upload-zone-icon { margin-bottom: 4px; }
+            .upload-zone-icon svg { width: 18px; height: 18px; }
+            .upload-zone-text { font-size: 8px; }
+            .upload-browse-btn { padding: 2px 6px; font-size: 7px; margin-top: 4px; }
+            .upload-file-pdf { width: 24px; height: 30px; border-radius: 3px; }
+            .upload-file-pdf svg { width: 14px; height: 14px; }
+            .upload-pdf-label { font-size: 5px; margin-top: 1px; }
+            .upload-progress-container { width: 50%; height: 2px; bottom: 15px; }
+            .upload-success-badge { width: 24px; height: 24px; }
+            .upload-success-badge svg { width: 14px; height: 14px; stroke-width: 2.5; }
+            .upload-uploaded-text { font-size: 9px; top: 60%; }
+            
+            /* Call Transcription */
+            .call-animation-container { padding: 8px; gap: 6px; }
+            .mini-card { padding: 6px; border-radius: 6px; }
+            .mini-card-header { font-size: 8px; margin-bottom: 6px; gap: 4px; }
+            .mini-icon { width: 8px; height: 8px; }
+            .summary-text { min-height: 24px; font-size: 8px; padding: 4px; margin-bottom: 4px; }
+            .typing-text { border-right-width: 1px; font-size: 8px; }
+            .mini-tags { gap: 3px; margin-bottom: 3px; }
+            .mini-tag { padding: 2px 4px; font-size: 7px; border-radius: 3px; }
+            .mini-avatar { width: 18px; height: 18px; font-size: 8px; }
+            .caller-name { font-size: 8px; }
+            .call-time { font-size: 7px; }
+            .mini-action-btn { width: 16px; height: 16px; }
+            .mini-action-btn svg { width: 8px; height: 8px; }
+            .transcript-section { margin-top: 6px; padding-top: 6px; }
+            .placeholder-lines { gap: 2px; }
+            .placeholder-line { height: 3px; }
+            .waveform-mini { height: 12px; margin-top: 4px; gap: 1px; }
+            .wave-bar-mini { width: 1px; }
+            @keyframes wave { 0%, 100% { height: 4px; } 50% { height: 10px; } }
+        }
       `}</style>
 
       {/* SECTION 7: ALL IN ONE (Shooting Stars Background) */}
-      <section className="relative py-32 overflow-hidden bg-black flex flex-col items-center justify-center min-h-[600px] w-full font-sans text-white">
+      <section className="relative py-16 md:py-32 overflow-hidden bg-black flex flex-col items-center justify-center min-h-[600px] w-full font-sans text-white">
           
           {/* Stars & Shooting Stars Containers */}
           <canvas ref={canvasRef} id="stars-canvas" className="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
@@ -1124,24 +1245,24 @@ export default function Section7() {
 
           <div className="relative z-20 container mx-auto px-4">
               
-              <div className="text-center mb-16">
+              <div className="text-center mb-10 md:mb-16">
                   {/* Heading */}
-                  <h2 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight mb-6">
+                  <h2 className="text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tight mb-4 md:mb-6">
                       <span className="text-white">All in</span> <span className="gradient-text">One.</span>
                   </h2>
                   
                   {/* Content Placeholder */}
-                  <p className="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+                  <p className="text-gray-400 text-base sm:text-xl max-w-2xl mx-auto leading-relaxed">
                       Everything you need to manage calls, bookings, and customer relationships in a single, powerful platform.
                   </p>
               </div>
 
               {/* BENTO GRID */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 max-w-4xl mx-auto">
                   
-                  {/* Item 1: Dawn of Innovation */}
-                  <div className="md:col-span-2 group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
-                      <div className="flex flex-1 w-full h-full min-h-[16rem] rounded-xl bg-slate-900 overflow-hidden relative">
+                  {/* Item 1: Security & Privacy */}
+                  <div className="col-span-1 md:col-span-2 group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
+                      <div className="flex flex-1 w-full h-full min-h-[12rem] md:min-h-[16rem] rounded-xl bg-slate-900 overflow-hidden relative">
                           <div ref={securityRef} className="w-full h-full relative">
                               <div className="sec7-scene-container">
                                   {/* SCENE 1: GDPR */}
@@ -1184,12 +1305,12 @@ export default function Section7() {
                                   </div>
                               </div>
                               <div className="sec7-progress-container">
-                                  <div id="sec7-main-progress" className="sec7-progress-bar"></div>
+                                  <div id="sec7-main-progress" className="sec7-progress-bar h-full bg-blue-500 w-0"></div>
                               </div>
                           </div>
                       </div>
                       <div className="transition duration-200 group-hover/bento:translate-x-2">
-                          <i data-lucide="shield-alert" className="h-4 w-4 text-neutral-500"></i>
+                          <ShieldAlert className="h-4 w-4 text-neutral-500" />
                           <div className="mt-2 mb-2 font-sans font-bold text-neutral-200">Security & Privacy</div>
                           <div className="font-sans text-xs font-normal text-neutral-300">Identify and block potential threats automatically.</div>
                       </div>
@@ -1197,7 +1318,7 @@ export default function Section7() {
 
                   {/* Item 2: Digital Revolution */}
                   <div className="group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
-                      <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800 overflow-hidden relative">
+                      <div className="flex flex-1 w-full h-full min-h-[8rem] md:min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800 overflow-hidden relative">
                           <div className="chat-container">
                               <div className="bg-blur"></div>
                               <div className="message-row row-1">
@@ -1224,7 +1345,7 @@ export default function Section7() {
                           </div>
                       </div>
                       <div className="transition duration-200 group-hover/bento:translate-x-2">
-                          <i data-lucide="file-warning" className="h-4 w-4 text-neutral-500"></i>
+                          <FileWarning className="h-4 w-4 text-neutral-500" />
                           <div className="mt-2 mb-2 font-sans font-bold text-neutral-200">The Digital Revolution</div>
                           <div className="font-sans text-xs font-normal text-neutral-300">Support multiple language.</div>
                       </div>
@@ -1232,7 +1353,7 @@ export default function Section7() {
 
                   {/* Item 3: Product Value Loop */}
                   <div className="group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
-                      <div className="flex flex-1 w-full h-full min-h-[12rem] rounded-xl bg-neutral-900 overflow-hidden relative flex items-center justify-center">
+                      <div className="flex flex-1 w-full h-full min-h-[10rem] md:min-h-[12rem] rounded-xl bg-neutral-900 overflow-hidden relative flex items-center justify-center">
                           <div className="value-loop-slider" id="value-loop-slider">
                               <div className="value-loop-container" id="slider-container">
                                   {/* Slide 1: Easy Setup */}
@@ -1278,15 +1399,15 @@ export default function Section7() {
                           </div>
                       </div>
                       <div className="transition duration-200 group-hover/bento:translate-x-2">
-                          <i data-lucide="zap" className="h-4 w-4 text-neutral-500"></i>
+                          <Zap className="h-4 w-4 text-neutral-500" />
                           <div className="mt-2 mb-2 font-sans font-bold text-neutral-200">Product Value Loop</div>
                           <div className="font-sans text-xs font-normal text-neutral-300">Experience seamless automation and intelligent features.</div>
                       </div>
                   </div>
 
-                  {/* Item 4: Power of Communication (Span 2) */}
-                  <div className="md:col-span-2 group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
-                      <div className="flex flex-1 w-full h-full min-h-[14rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800 overflow-hidden relative">
+                  {/* Item 4: Centralized Scheduling (Span 2) */}
+                  <div className="col-span-1 md:col-span-2 group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
+                      <div className="flex flex-1 w-full h-full min-h-[12rem] md:min-h-[14rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800 overflow-hidden relative">
                           <div className="sched-dash-card">
                               <div className="sched-sidebar">
                                   <div className="sched-nav-icon active"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div>
@@ -1335,19 +1456,19 @@ export default function Section7() {
                                       </div>
                                   </div>
                               </div>
-                              <div className="sched-cursor"></div>
                           </div>
+                          <div className="sched-cursor"></div>
                       </div>
                       <div className="transition duration-200 group-hover/bento:translate-x-2">
-                          <i data-lucide="columns" className="h-4 w-4 text-neutral-500"></i>
+                          <Columns className="h-4 w-4 text-neutral-500" />
                           <div className="mt-2 mb-2 font-sans font-bold text-neutral-200">Centralized Scheduling System</div>
                           <div className="font-sans text-xs font-normal text-neutral-300">Manage appointments and resources efficiently.</div>
                       </div>
                   </div>
 
-                  {/* Item 5: Pursuit of Knowledge */}
+                  {/* Item 5: Drag & Drop Upload */}
                   <div className="group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
-                      <div className="flex flex-1 w-full h-full min-h-[12rem] rounded-xl bg-neutral-900 overflow-hidden relative">
+                      <div className="flex flex-1 w-full h-full min-h-[10rem] md:min-h-[12rem] rounded-xl bg-neutral-900 overflow-hidden relative">
                           <div className="upload-card">
                               <div className="upload-drop-zone">
                                   <div className="upload-zone-icon">
@@ -1371,15 +1492,15 @@ export default function Section7() {
                           </div>
                       </div>
                       <div className="transition duration-200 group-hover/bento:translate-x-2">
-                          <i data-lucide="file-up" className="h-4 w-4 text-neutral-500"></i>
+                          <FileUp className="h-4 w-4 text-neutral-500" />
                           <div className="mt-2 mb-2 font-sans font-bold text-neutral-200">Drag & Drop Upload</div>
                           <div className="font-sans text-xs font-normal text-neutral-300">Seamlessly manage your documents.</div>
                       </div>
                   </div>
 
                   {/* Item 6: Call Transcription & Summaries */}
-                  <div className="md:col-span-2 group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
-                      <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800 overflow-hidden">
+                  <div className="col-span-1 md:col-span-2 group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none">
+                      <div className="flex flex-1 w-full h-full min-h-[5rem] md:min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800 overflow-hidden">
                           <div className="call-animation-container w-full">
                               <div className="mini-card">
                                   <div className="mini-card-header">
@@ -1448,35 +1569,13 @@ export default function Section7() {
                           </div>
                       </div>
                       <div className="transition duration-200 group-hover/bento:translate-x-2">
-                          <i data-lucide="phone" className="h-4 w-4 text-neutral-500"></i>
+                          <Phone className="h-4 w-4 text-neutral-500" />
                           <div className="mt-2 mb-2 font-sans font-bold text-neutral-200">Call Transcription & Summaries</div>
                           <div className="font-sans text-xs font-normal text-neutral-300">Every call captured—read it all at a glance.</div>
                       </div>
                   </div>
 
-                  {/* Item 7: Spirit of Adventure (Span 2) */}
-                  {/* <div className="md:col-span-3 group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-white/[0.2] bg-black p-4 transition duration-200 hover:shadow-xl shadow-none relative overflow-hidden">
-                                            <div id="bento-map-container" className="flex flex-1 w-full h-full min-h-[12rem] rounded-xl bg-neutral-900 relative overflow-hidden border border-white/5">
-                          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/World_map_blank_without_borders.svg/2000px-World_map_blank_without_borders.svg.png" 
-                               className="absolute inset-0 w-full h-full object-cover opacity-20 filter invert sepia hue-rotate-180 saturate-50 mix-blend-overlay" 
-                               style={{ objectPosition: 'center 25%' }}
-                               alt="World Map" />
-                          
-                          <svg ref={mapSvgRef} id="bento-map-svg" viewBox="0 0 800 400" className="absolute inset-0 w-full h-full pointer-events-none"></svg>
-                      </div>
-
-                      <div className="relative z-20 transition duration-200 group-hover/bento:translate-x-2 mt-auto">
-                          <div className="flex items-center gap-2 mb-1">
-                              <i data-lucide="globe-2" className="h-4 w-4 text-blue-400"></i>
-                              <span className="text-xs font-semibold text-blue-400 uppercase tracking-wider">Multi-language Support</span>
-                          </div>
-                          <div className="mt-2 mb-2 font-sans font-bold text-neutral-200">The Spirit of Adventure</div>
-                          <div className="font-sans text-xs font-normal text-neutral-300">Embark on exciting journeys and thrilling discoveries.</div>
-                      </div>
-                  </div> */}
-
               </div>
-
           </div>
       </section>
     </>
