@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 
-export default function Section2() {
+// The user's requested component
+function Section2() {
   useEffect(() => {
     // Load Tailwind if not present
     if (!document.querySelector('script[src="https://cdn.tailwindcss.com"]')) {
@@ -54,6 +55,14 @@ export default function Section2() {
             transition: background-color 0.7s;
         }
 
+        @media (max-width: 640px) {
+            .section2-spotlight {
+                width: 500px;
+                height: 500px;
+                filter: blur(80px);
+            }
+        }
+
         /* Card Hover Glow & Transitions */
         .step-card {
             transition: all 0.3s ease-in-out;
@@ -66,16 +75,16 @@ export default function Section2() {
         }
       `}</style>
 
-      <div className="w-full bg-grid-section2 bg-[#050505] text-white font-sans relative overflow-hidden">
+      <div className="w-full bg-grid-section2 bg-[#050505] text-white font-sans relative overflow-hidden min-h-screen flex items-center">
         {/* Dynamic Background Glow */}
         <div className="section2-spotlight"></div>
 
         {/* SECTION 2: HOW IT WORKS */}
-        <section className="py-12 px-4 sm:px-8 lg:px-16 relative w-full z-10">
+        <section className="py-8 sm:py-12 px-4 sm:px-8 lg:px-16 relative w-full z-10">
              <div className="container mx-auto">
                 
                 {/* Section Header */}
-                <div className="text-center max-w-3xl mx-auto mb-16">
+                <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
                     <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
                         Set Up your <span className="gradient-text">AI Assistant</span> in 5 min
                     </h2>
@@ -83,21 +92,21 @@ export default function Section2() {
                 </div>
 
                 {/* Steps Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
                     
                     {/* Step 1 */}
-                    <div className="step-card bg-gray-900/40 backdrop-blur-sm border border-gray-800 rounded-2xl p-8 relative overflow-hidden group">
+                    <div className="step-card bg-gray-900/40 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 sm:p-8 relative overflow-hidden group">
                         {/* Number Watermark */}
-                        <div className="absolute -top-4 -right-4 text-8xl font-bold text-white/5 select-none z-0 group-hover:text-white/10 transition-colors">01</div>
+                        <div className="absolute -top-4 -right-4 text-6xl sm:text-8xl font-bold text-white/5 select-none z-0 group-hover:text-white/10 transition-colors">01</div>
                         
                         <div className="relative z-10">
                             {/* Icon */}
-                            <div className="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 border border-blue-500/20">
-                                <i data-lucide="smartphone" className="w-7 h-7 text-blue-400"></i>
+                            <div className="w-12 h-12 sm:w-14 sm:h-14 bg-blue-500/10 rounded-xl flex items-center justify-center mb-4 sm:mb-6 border border-blue-500/20">
+                                <i data-lucide="smartphone" className="w-6 h-6 sm:w-7 sm:h-7 text-blue-400"></i>
                             </div>
                             
                             {/* Title */}
-                            <h3 className="text-xl font-bold text-white mb-4">Choose Your Business Number</h3>
+                            <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Choose Your Business Number</h3>
                             
                             {/* Content */}
                             <p className="text-gray-400 leading-relaxed text-sm mb-4">
@@ -108,18 +117,18 @@ export default function Section2() {
                     </div>
 
                     {/* Step 2 */}
-                    <div className="step-card bg-gray-900/40 backdrop-blur-sm border border-gray-800 rounded-2xl p-8 relative overflow-hidden group">
+                    <div className="step-card bg-gray-900/40 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 sm:p-8 relative overflow-hidden group">
                         {/* Number Watermark */}
-                        <div className="absolute -top-4 -right-4 text-8xl font-bold text-white/5 select-none z-0 group-hover:text-white/10 transition-colors">02</div>
+                        <div className="absolute -top-4 -right-4 text-6xl sm:text-8xl font-bold text-white/5 select-none z-0 group-hover:text-white/10 transition-colors">02</div>
                         
                         <div className="relative z-10">
                             {/* Icon */}
-                            <div className="w-14 h-14 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 border border-purple-500/20">
-                                <i data-lucide="file-text" className="w-7 h-7 text-purple-400"></i>
+                            <div className="w-12 h-12 sm:w-14 sm:h-14 bg-purple-500/10 rounded-xl flex items-center justify-center mb-4 sm:mb-6 border border-purple-500/20">
+                                <i data-lucide="file-text" className="w-6 h-6 sm:w-7 sm:h-7 text-purple-400"></i>
                             </div>
                             
                             {/* Title */}
-                            <h3 className="text-xl font-bold text-white mb-4">Configure Business Info</h3>
+                            <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Configure Business Info</h3>
                             
                             {/* Content */}
                             <p className="text-gray-400 leading-relaxed text-sm mb-4">
@@ -130,18 +139,18 @@ export default function Section2() {
                     </div>
 
                     {/* Step 3 */}
-                    <div className="step-card bg-gray-900/40 backdrop-blur-sm border border-gray-800 rounded-2xl p-8 relative overflow-hidden group">
+                    <div className="step-card bg-gray-900/40 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 sm:p-8 relative overflow-hidden group">
                         {/* Number Watermark */}
-                        <div className="absolute -top-4 -right-4 text-8xl font-bold text-white/5 select-none z-0 group-hover:text-white/10 transition-colors">03</div>
+                        <div className="absolute -top-4 -right-4 text-6xl sm:text-8xl font-bold text-white/5 select-none z-0 group-hover:text-white/10 transition-colors">03</div>
                         
                         <div className="relative z-10">
                             {/* Icon */}
-                            <div className="w-14 h-14 bg-green-500/10 rounded-xl flex items-center justify-center mb-6 border border-green-500/20">
-                                <i data-lucide="phone-call" className="w-7 h-7 text-green-400"></i>
+                            <div className="w-12 h-12 sm:w-14 sm:h-14 bg-green-500/10 rounded-xl flex items-center justify-center mb-4 sm:mb-6 border border-green-500/20">
+                                <i data-lucide="phone-call" className="w-6 h-6 sm:w-7 sm:h-7 text-green-400"></i>
                             </div>
                             
                             {/* Title */}
-                            <h3 className="text-xl font-bold text-white mb-4">Begin Receiving Calls</h3>
+                            <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Begin Receiving Calls</h3>
                             
                             {/* Content */}
                             <p className="text-gray-400 leading-relaxed text-sm mb-4">
@@ -157,4 +166,11 @@ export default function Section2() {
       </div>
     </>
   )
+}
+
+// Main App component to render the section
+export default function App() {
+    return (
+        <Section2 />
+    );
 }

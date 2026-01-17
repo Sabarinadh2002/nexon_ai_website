@@ -28,7 +28,7 @@ function HomePage() {
       {/* <Section10 /> */}
       {/* <Section8 /> */}
       <Section9 />
-      <Pricing />
+      {/* <Pricing /> */}
       {/* <Integration /> */}
       <FAQ />
       <Footer />

@@ -2,58 +2,58 @@ import React, { useState, useEffect } from 'react';
 import { Store, Building2, Building, Calendar, Users, TrendingUp, Shield, Globe, Zap, CreditCard, BarChart3 } from 'lucide-react';
 
 const data = {
-    small: {
-      id: 'small',
-      title: 'Small Scale Business',
-      description: 'Perfect for Salons, Clinics, Boutique Retail, and Solo Practitioners.',
-      keywords: ['Salon', 'Clinic', 'Boutique'],
-      icon: <Store size={48} className="text-white" />,
-      color: 'bg-emerald-500',
-      glow: 'shadow-emerald-500/50',
-      borderColor: 'border-emerald-500/50',
-      textColor: 'text-emerald-400',
-      bgColor: 'bg-emerald-500/10',
-      benefits: [
-        { title: 'Easy Scheduling', icon: <Calendar size={20} />, text: 'Manage appointments effortlessly.' },
-        { title: 'Quick Billing', icon: <CreditCard size={20} />, text: 'Streamlined POS & invoicing.' },
-        { title: 'Client CRM', icon: <Users size={20} />, text: 'Build loyal customer relationships.' },
-      ]
-    },
-    medium: {
-      id: 'medium',
-      title: 'Medium Scale Business',
-      description: 'Designed for Regional Chains, Multi-location Stores, and Growing Teams.',
-      keywords: ['Franchise', 'Retail Chain'],
-      icon: <Building2 size={48} className="text-white" />,
-      color: 'bg-blue-600',
-      glow: 'shadow-blue-600/50',
-      borderColor: 'border-blue-500/50',
-      textColor: 'text-blue-400',
-      bgColor: 'bg-blue-600/10',
-      benefits: [
-        { title: 'Multi-Location', icon: <Globe size={20} />, text: 'Centralized control for all branches.' },
-        { title: 'Staff Mgmt', icon: <Users size={20} />, text: 'Rosters, payroll, and performance.' },
-        { title: 'Marketing', icon: <Zap size={20} />, text: 'Automated campaigns & loyalty.' },
-      ]
-    },
-    enterprise: {
-      id: 'enterprise',
-      title: 'Enterprise',
-      description: 'Robust solutions for Large Corporations, Franchises, and High Volume.',
-      keywords: ['MNC', 'Global'],
-      icon: <Building size={48} className="text-white" />,
-      color: 'bg-purple-600',
-      glow: 'shadow-purple-600/50',
-      borderColor: 'border-purple-500/50',
-      textColor: 'text-purple-400',
-      bgColor: 'bg-purple-600/10',
-      benefits: [
-        { title: 'Advanced Analytics', icon: <BarChart3 size={20} />, text: 'Data-driven decision making.' },
-        { title: 'Custom Security', icon: <Shield size={20} />, text: 'Role-based access & SSO.' },
-        { title: 'API Integration', icon: <TrendingUp size={20} />, text: 'Seamless connection with ERPs.' },
-      ]
-    }
-  };
+  small: {
+    id: 'small',
+    title: 'Small Scale Business',
+    description: 'Perfect for Salons, Clinics, Boutique Retail, and Solo Practitioners.',
+    keywords: ['Salon', 'Clinic', 'Boutique'],
+    icon: <Store size={48} className="text-white" />,
+    color: 'bg-emerald-500',
+    glow: 'shadow-emerald-500/50',
+    borderColor: 'border-emerald-500/50',
+    textColor: 'text-emerald-400',
+    bgColor: 'bg-emerald-500/10',
+    benefits: [
+      { title: 'Easy Scheduling', icon: <Calendar size={20} />, text: 'Manage appointments effortlessly.' },
+      { title: 'Quick Billing', icon: <CreditCard size={20} />, text: 'Streamlined POS & invoicing.' },
+      { title: 'Client CRM', icon: <Users size={20} />, text: 'Build loyal customer relationships.' },
+    ]
+  },
+  medium: {
+    id: 'medium',
+    title: 'Medium Scale Business',
+    description: 'Designed for Regional Chains, Multi-location Stores, and Growing Teams.',
+    keywords: ['Franchise', 'Retail Chain'],
+    icon: <Building2 size={48} className="text-white" />,
+    color: 'bg-blue-600',
+    glow: 'shadow-blue-600/50',
+    borderColor: 'border-blue-500/50',
+    textColor: 'text-blue-400',
+    bgColor: 'bg-blue-600/10',
+    benefits: [
+      { title: 'Multi-Location', icon: <Globe size={20} />, text: 'Centralized control for all branches.' },
+      { title: 'Staff Mgmt', icon: <Users size={20} />, text: 'Rosters, payroll, and performance.' },
+      { title: 'Marketing', icon: <Zap size={20} />, text: 'Automated campaigns & loyalty.' },
+    ]
+  },
+  enterprise: {
+    id: 'enterprise',
+    title: 'Enterprise',
+    description: 'Robust solutions for Large Corporations, Franchises, and High Volume.',
+    keywords: ['MNC', 'Global'],
+    icon: <Building size={48} className="text-white" />,
+    color: 'bg-purple-600',
+    glow: 'shadow-purple-600/50',
+    borderColor: 'border-purple-500/50',
+    textColor: 'text-purple-400',
+    bgColor: 'bg-purple-600/10',
+    benefits: [
+      { title: 'Advanced Analytics', icon: <BarChart3 size={20} />, text: 'Data-driven decision making.' },
+      { title: 'Custom Security', icon: <Shield size={20} />, text: 'Role-based access & SSO.' },
+      { title: 'API Integration', icon: <TrendingUp size={20} />, text: 'Seamless connection with ERPs.' },
+    ]
+  }
+};
 
 const styles = `
     .gradient-text {
@@ -89,10 +89,10 @@ const styles = `
       to { transform: rotate(0deg); }
     }
     .orbit-container {
-      animation: orbit-spin 30s linear infinite;
+      animation: orbit-spin 45s linear infinite;
     }
     .orbit-counter-rotator {
-      animation: orbit-counter-spin 30s linear infinite;
+      animation: orbit-counter-spin 45s linear infinite;
     }
     .fade-in {
       animation: fadeIn 0.5s ease-out forwards;
@@ -107,9 +107,16 @@ const styles = `
       left: 50%;
       transform: rotate(var(--angle)) translate(var(--radius)) rotate(calc(var(--angle) * -1));
     }
+    @keyframes progress-loading {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+    .progress-bar {
+      animation: progress-loading 5000ms linear forwards;
+    }
   `;
 
-const ProductScaleSelector = () => {
+export default function Section4() {
   const [activeScale, setActiveScale] = useState('small');
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -120,24 +127,36 @@ const ProductScaleSelector = () => {
     return () => clearTimeout(timer);
   }, [activeScale]);
 
+  // Auto-rotation timer
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setActiveScale((current) => {
+        const keys = Object.keys(data);
+        const nextIndex = (keys.indexOf(current) + 1) % keys.length;
+        return keys[nextIndex];
+      });
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [activeScale]);
+
   const activeData = data[activeScale];
 
   return (
     <>
       <style>{styles}</style>
-      <section className="w-full py-20 font-sans relative overflow-hidden bg-grid-scale" style={{ backgroundColor: '#050505', color: '#ffffff' }}>
+      <section className="w-full min-h-screen py-12 md:py-20 font-sans relative overflow-hidden bg-grid-scale flex items-center" style={{ backgroundColor: '#050505', color: '#ffffff' }}>
         
         {/* Dynamic Background Glow */}
         <div className="section4-spotlight"></div>
 
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 relative z-10 w-full">
           
           {/* Section Heading */}
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
               Choose your <span className="gradient-text">scale</span>
             </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">
               Select your business size to see tailored solutions designed to help you grow.
             </p>
           </div>
@@ -146,13 +165,13 @@ const ProductScaleSelector = () => {
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
             
             {/* LEFT PANEL: Navigation */}
-            <div className="w-full lg:w-1/3 flex flex-col">
-              <div className="p-6 space-y-3 overflow-y-auto flex-1">
+            <div className="w-full lg:w-1/3 flex flex-col order-1">
+              <div className="space-y-3">
                 {Object.values(data).map((item) => (
                   <button
                     key={item.id}
                     onClick={() => setActiveScale(item.id)}
-                    className={`text-left w-full p-5 rounded-xl transition-all duration-300 group border relative overflow-hidden
+                    className={`text-left w-full p-4 md:p-5 rounded-xl transition-all duration-300 group border relative overflow-hidden
                       ${activeScale === item.id 
                         ? `${item.borderColor} ${item.bgColor} shadow-lg` 
                         : 'bg-transparent border-transparent hover:bg-neutral-800/50 hover:border-neutral-700'
@@ -160,7 +179,7 @@ const ProductScaleSelector = () => {
                   >
                     <div className="flex items-center justify-between relative z-10">
                       <div>
-                        <h3 className={`font-bold text-lg ${activeScale === item.id ? 'text-white' : 'text-gray-400 group-hover:text-gray-200'}`}>
+                        <h3 className={`font-bold text-base md:text-lg ${activeScale === item.id ? 'text-white' : 'text-gray-400 group-hover:text-gray-200'}`}>
                           {item.title}
                         </h3>
                         <p className={`text-xs mt-1 ${activeScale === item.id ? 'text-gray-300' : 'text-gray-500'}`}>
@@ -194,7 +213,12 @@ const ProductScaleSelector = () => {
                     
                     {/* Active Indicator Bar */}
                     {activeScale === item.id && (
-                      <div className={`absolute left-0 top-0 bottom-0 w-1 ${item.color}`} />
+                      <>
+                        <div className={`absolute left-0 top-0 bottom-0 w-1 ${item.color}`} />
+                        <div className="absolute bottom-0 left-0 w-full h-1 bg-white/10">
+                          <div className={`h-full ${item.color} progress-bar`} />
+                        </div>
+                      </>
                     )}
                   </button>
                 ))}
@@ -202,33 +226,33 @@ const ProductScaleSelector = () => {
             </div>
 
             {/* RIGHT PANEL: Visualizer */}
-            <div className="w-full lg:w-2/3 relative flex items-center justify-center overflow-hidden h-[600px]">
+            <div className="w-full lg:w-2/3 order-2 relative flex flex-col lg:items-center lg:justify-center overflow-hidden h-auto min-h-[500px] lg:h-[600px]" style={{ '--orbit-radius': 'clamp(140px, 25vw, 260px)' }}>
               
               {/* Background Decorative Circles */}
               <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
-                 <div className="w-75 h-75 md:w-125] md:h-125 rounded-full border border-gray-700" />
-                 <div className="absolute w-80 h-80 md:w-96 md:h-96 rounded-full border border-gray-800" />
+                 <div className="rounded-full border border-gray-700" style={{ width: 'calc(2 * var(--orbit-radius))', height: 'calc(2 * var(--orbit-radius))' }} />
+                 <div className="absolute rounded-full border border-gray-800 border-dashed" style={{ width: 'calc(2 * var(--orbit-radius) + 60px)', height: 'calc(2 * var(--orbit-radius) + 60px)' }} />
               </div>
 
               {/* Main Content Wrapper */}
-              <div className={`relative w-full h-full flex items-center justify-center ${isAnimating ? 'fade-in' : ''}`}>
+              <div className={`relative w-full h-full flex flex-col items-center justify-center ${isAnimating ? 'fade-in' : ''}`}>
                 
-                {/* ORBIT SYSTEM */}
-                <div className="absolute inset-0 flex items-center justify-center orbit-container pointer-events-none">
+                {/* ORBIT SYSTEM (Desktop Only) */}
+                <div key={activeScale} className="hidden lg:flex absolute inset-0 items-center justify-center orbit-container pointer-events-none">
                   {activeData.benefits.map((benefit, index) => {
-                    const angle = (360 / activeData.benefits.length) * index - 90; // Start from top
+                    const angle = [-90, 30, 150][index]; // 12, 4, 8 o'clock positions
                     return (
                       <div 
                         key={index}
                         className="orbit-wrapper"
                         style={{ 
                           '--angle': `${angle}deg`,
-                          '--radius': 'clamp(140px, 25vw, 260px)'
+                          '--radius': 'var(--orbit-radius)'
                         }}
                       >
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                           <div className="orbit-counter-rotator">
-                            <div className="orbit-item w-48 md:w-64 p-4 bg-neutral-900/90 rounded-xl shadow-xl border border-neutral-700 backdrop-blur-md flex items-start gap-3 transform hover:scale-105 transition-transform cursor-pointer pointer-events-auto">
+                            <div className="orbit-item w-64 p-4 bg-neutral-900/90 rounded-xl shadow-xl border border-neutral-700 backdrop-blur-md flex items-start gap-3 transform hover:scale-105 transition-transform cursor-pointer pointer-events-auto">
                               <div className={`p-2 rounded-lg ${activeData.bgColor} ${activeData.textColor}`}>
                                 {benefit.icon}
                               </div>
@@ -244,35 +268,45 @@ const ProductScaleSelector = () => {
                   })}
                 </div>
 
-                {/* CENTRAL HUB */}
-                <div className="relative z-10 flex flex-col items-center justify-center text-center p-8">
+                {/* CENTRAL HUB & MOBILE GRID */}
+                <div className="relative z-10 flex flex-col items-center justify-center text-center p-4 md:p-8 w-full max-w-lg lg:max-w-none">
                   
                   {/* Central Circle Image/Icon */}
-                  <div className={`w-32 h-32 md:w-40 md:h-40 rounded-full ${activeData.color} flex items-center justify-center shadow-2xl ${activeData.glow} mb-6 transition-all duration-500`}>
+                  <div className={`w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full ${activeData.color} flex items-center justify-center shadow-2xl ${activeData.glow} mb-6 transition-all duration-500`}>
                     {activeData.icon}
                   </div>
 
                   {/* Central Text */}
-                  <div className="max-w-sm">
+                  <div className="max-w-sm mb-8 lg:mb-0">
                     <h2 className="text-2xl font-bold text-white mb-2">{activeData.title}</h2>
                     <p className="text-gray-400 leading-relaxed text-sm">
                       {activeData.description}
                     </p>
                   </div>
+
+                  {/* MOBILE/TABLET BENEFITS GRID (Visible below LG breakpoint) */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+                     {activeData.benefits.map((benefit, index) => (
+                       <div key={index} className="bg-neutral-900/50 p-4 rounded-xl border border-white/5 flex items-start gap-3 text-left">
+                          <div className={`p-2 rounded-lg shrink-0 ${activeData.bgColor} ${activeData.textColor}`}>
+                            {benefit.icon}
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-gray-200 text-sm">{benefit.title}</h4>
+                            <p className="text-xs text-gray-400 mt-1 leading-relaxed">{benefit.text}</p>
+                          </div>
+                       </div>
+                     ))}
+                  </div>
+
                 </div>
 
               </div>
               
-              {/* Mobile-only note */}
-              <div className="absolute bottom-4 left-0 right-0 text-center text-gray-500 text-xs md:hidden px-4">
-                Visuals optimized for desktop view
-              </div>
             </div>
           </div>
         </div>
       </section>
     </>
   );
-};
-
-export default ProductScaleSelector;
+}

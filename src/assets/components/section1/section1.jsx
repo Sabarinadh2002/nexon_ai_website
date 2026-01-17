@@ -60,6 +60,25 @@ export default function Section1() {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
         }
+
+        .hero-spotlight {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1000px;
+            height: 1000px;
+            background-color: rgba(147, 51, 234, 0.1);
+            filter: blur(120px);
+            pointer-events: none;
+            border-radius: 9999px;
+        }
+        @media (max-width: 640px) {
+            .hero-spotlight {
+                width: 600px;
+                height: 600px;
+            }
+        }
       `}</style>
 
       {/* Navbar */}
@@ -106,7 +125,7 @@ export default function Section1() {
         <section className="min-h-screen flex items-center justify-center px-4 sm:px-8 lg:px-16 pt-28 pb-16 lg:pt-20 lg:pb-0 relative overflow-hidden bg-grid" style={{ backgroundColor: '#050505', color: '#ffffff' }}>
 
             {/* Dynamic Background Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[1000px] h-[600px] sm:h-[1000px] bg-purple-600/10 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none transition-colors duration-700"></div>
+            <div className="hero-spotlight"></div>
 
             <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center z-10">
 

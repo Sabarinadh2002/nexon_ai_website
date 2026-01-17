@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Smile, Wrench, Home, Hammer, Mic } from 'lucide-react';
 
 const demoData = {
@@ -42,6 +42,19 @@ const demoData = {
 
 export default function Section3() {
   const [activeIndustry, setActiveIndustry] = useState('dental');
+
+  // Auto-rotation timer
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setActiveIndustry((current) => {
+        const keys = Object.keys(demoData);
+        const nextIndex = (keys.indexOf(current) + 1) % keys.length;
+        return keys[nextIndex];
+      });
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [activeIndustry]);
+
   const currentData = demoData[activeIndustry];
 
   return (
@@ -127,11 +140,20 @@ export default function Section3() {
         .animate-wave-right {
             animation: wave-slide-right 4s linear infinite;
         }
+
+        /* Progress Bar Animation */
+        @keyframes progress-loading {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+        .progress-bar {
+            animation: progress-loading 5000ms linear forwards;
+        }
       `}</style>
 
-      <div className="w-full bg-grid-section3 bg-[#050505] text-white font-sans relative min-h-screen flex items-center">
+      <div className="w-full bg-grid-section3 bg-[#050505] text-white font-sans relative">
         {/* SECTION 3: TRY DEMO */}
-        <section id="demo-section" className="py-12 px-4 sm:px-8 lg:px-16 relative overflow-hidden transition-colors duration-700 w-full max-w-7xl mx-auto pb-32 lg:pb-12">
+        <section id="demo-section" className="py-8 sm:py-12 px-4 sm:px-8 lg:px-16 relative overflow-hidden transition-colors duration-700 w-full max-w-7xl mx-auto">
 
             {/* Dynamic Ambient Background */}
             <div
@@ -152,7 +174,7 @@ export default function Section3() {
 
                         {/* Dental Clinic */}
                         <div
-                          className={`industry-box cursor-pointer bg-gray-900/40 border border-gray-800 rounded-xl p-5 hover:border-gray-600 transition-all duration-300 ${activeIndustry === 'dental' ? 'active' : ''}`}
+                          className={`relative industry-box cursor-pointer bg-gray-900/40 border border-gray-800 rounded-xl p-5 hover:border-gray-600 transition-all duration-300 ${activeIndustry === 'dental' ? 'active' : ''}`}
                           onClick={() => setActiveIndustry('dental')}
                         >
                             <div className="flex items-center gap-4">
@@ -168,11 +190,16 @@ export default function Section3() {
                                     <span className="text-xs bg-cyan-500/10 text-cyan-300 px-2 py-1 rounded border border-cyan-500/20">Pricing</span>
                                 </div>
                             </div>
+                            {activeIndustry === 'dental' && (
+                                <div className="absolute bottom-0 left-0 w-full h-1 bg-white/10 rounded-b-xl overflow-hidden">
+                                    <div className={`h-full ${demoData.dental.bgClass} progress-bar`} />
+                                </div>
+                            )}
                         </div>
 
                         {/* Plumber */}
                         <div
-                          className={`industry-box cursor-pointer bg-gray-900/40 border border-gray-800 rounded-xl p-5 hover:border-gray-600 transition-all duration-300 ${activeIndustry === 'plumber' ? 'active' : ''}`}
+                          className={`relative industry-box cursor-pointer bg-gray-900/40 border border-gray-800 rounded-xl p-5 hover:border-gray-600 transition-all duration-300 ${activeIndustry === 'plumber' ? 'active' : ''}`}
                           onClick={() => setActiveIndustry('plumber')}
                         >
                             <div className="flex items-center gap-4">
@@ -188,11 +215,16 @@ export default function Section3() {
                                     <span className="text-xs bg-blue-500/10 text-blue-300 px-2 py-1 rounded border border-blue-500/20">Dispatch</span>
                                 </div>
                             </div>
+                            {activeIndustry === 'plumber' && (
+                                <div className="absolute bottom-0 left-0 w-full h-1 bg-white/10 rounded-b-xl overflow-hidden">
+                                    <div className={`h-full ${demoData.plumber.bgClass} progress-bar`} />
+                                </div>
+                            )}
                         </div>
 
                         {/* Real Estate */}
                         <div
-                          className={`industry-box cursor-pointer bg-gray-900/40 border border-gray-800 rounded-xl p-5 hover:border-gray-600 transition-all duration-300 ${activeIndustry === 'realestate' ? 'active' : ''}`}
+                          className={`relative industry-box cursor-pointer bg-gray-900/40 border border-gray-800 rounded-xl p-5 hover:border-gray-600 transition-all duration-300 ${activeIndustry === 'realestate' ? 'active' : ''}`}
                           onClick={() => setActiveIndustry('realestate')}
                         >
                             <div className="flex items-center gap-4">
@@ -208,11 +240,16 @@ export default function Section3() {
                                     <span className="text-xs bg-yellow-500/10 text-yellow-300 px-2 py-1 rounded border border-yellow-500/20">High Value</span>
                                 </div>
                             </div>
+                            {activeIndustry === 'realestate' && (
+                                <div className="absolute bottom-0 left-0 w-full h-1 bg-white/10 rounded-b-xl overflow-hidden">
+                                    <div className={`h-full ${demoData.realestate.bgClass} progress-bar`} />
+                                </div>
+                            )}
                         </div>
 
                         {/* Roofer */}
                         <div
-                          className={`industry-box cursor-pointer bg-gray-900/40 border border-gray-800 rounded-xl p-5 hover:border-gray-600 transition-all duration-300 ${activeIndustry === 'roofer' ? 'active' : ''}`}
+                          className={`relative industry-box cursor-pointer bg-gray-900/40 border border-gray-800 rounded-xl p-5 hover:border-gray-600 transition-all duration-300 ${activeIndustry === 'roofer' ? 'active' : ''}`}
                           onClick={() => setActiveIndustry('roofer')}
                         >
                             <div className="flex items-center gap-4">
@@ -228,6 +265,11 @@ export default function Section3() {
                                     <span className="text-xs bg-orange-500/10 text-orange-300 px-2 py-1 rounded border border-orange-500/20">Inspections</span>
                                 </div>
                             </div>
+                            {activeIndustry === 'roofer' && (
+                                <div className="absolute bottom-0 left-0 w-full h-1 bg-white/10 rounded-b-xl overflow-hidden">
+                                    <div className={`h-full ${demoData.roofer.bgClass} progress-bar`} />
+                                </div>
+                            )}
                         </div>
 
                     </div>
@@ -264,58 +306,58 @@ export default function Section3() {
                             </div>
                         </div>
 
-                        {/* ==============================================
-                            MOBILE VIEW: RECTANGULAR TALK BOX
-                            Visible only on small screens (<lg)
-                            Fixed at bottom of screen like an assistant
-                        ============================================== */}
-                        <div className="lg:hidden fixed bottom-6 left-4 right-4 z-50 animate-in slide-in-from-bottom-10 fade-in duration-500">
-                            {/* Glow Effect behind box */}
-                            <div className={`absolute inset-0 blur-xl opacity-40 ${currentData.bgClass} rounded-2xl`}></div>
+                    </div>
 
-                            {/* The Box itself */}
-                            <div className="relative bg-[#111] border border-white/10 rounded-2xl p-4 shadow-2xl flex items-center gap-4 overflow-hidden backdrop-blur-xl">
+                </div>
 
-                                {/* Left: Active Mic Indicator */}
-                                <div className={`relative flex-shrink-0 w-12 h-12 rounded-full ${currentData.bgClass} flex items-center justify-center shadow-lg`}>
-                                    <div className="absolute inset-0 rounded-full border border-white/20 animate-ping opacity-50"></div>
-                                    <Mic className="w-6 h-6 text-white relative z-10" />
-                                </div>
+                {/* ==============================================
+                    MOBILE VIEW: RECTANGULAR TALK BOX
+                    Visible only on small screens (<lg)
+                    Positioned below the industry buttons
+                ============================================== */}
+                <div className="lg:hidden relative mt-8 z-50 animate-in slide-in-from-bottom-10 fade-in duration-500">
+                    {/* Glow Effect behind box */}
+                    <div className={`absolute inset-0 blur-xl opacity-40 ${currentData.bgClass} rounded-2xl`}></div>
 
-                                {/* Middle: Text Info */}
-                                <div className="flex-1 min-w-0 z-10">
-                                    <h3 className={`font-bold text-base truncate ${currentData.colorClass}`}>{currentData.title}</h3>
-                                    <div className="flex items-center gap-2">
-                                        <span className="relative flex h-2 w-2">
-                                          <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${currentData.bgClass} opacity-75`}></span>
-                                          <span className={`relative inline-flex rounded-full h-2 w-2 ${currentData.bgClass}`}></span>
-                                        </span>
-                                        <p className="text-xs text-gray-400 font-medium">AI Agent Listening...</p>
-                                    </div>
-                                </div>
+                    {/* The Box itself */}
+                    <div className="relative bg-[#111] border border-white/10 rounded-2xl p-4 shadow-2xl flex items-center gap-4 overflow-hidden backdrop-blur-xl">
 
-                                {/* Background: Wave Animation (Compressed) */}
-                                <div className="absolute inset-0 flex items-center justify-end opacity-20 pointer-events-none">
-                                    <div className="relative w-full h-full overflow-hidden">
-                                         <svg viewBox="0 0 200 20" className={`absolute top-1/2 -translate-y-1/2 right-0 w-[150%] h-24 fill-none ${currentData.colorClass} animate-wave-left`}>
-                                            <path d="M0 10 Q 25 0 50 10 T 100 10 T 150 10 T 200 10 T 250 10 T 300 10 T 350 10 T 400 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                         </svg>
-                                    </div>
-                                </div>
+                        {/* Left: Active Mic Indicator */}
+                        <div className={`relative flex-shrink-0 w-12 h-12 rounded-full ${currentData.bgClass} flex items-center justify-center shadow-lg`}>
+                            <div className="absolute inset-0 rounded-full border border-white/20 animate-ping opacity-50"></div>
+                            <Mic className="w-6 h-6 text-white relative z-10" />
+                        </div>
 
-                                {/* Right: Visualizer Bars (Static Simulation) */}
-                                <div className="flex gap-1 h-6 items-center z-10">
-                                    <div className={`w-1 bg-white/50 rounded-full animate-pulse h-3`} style={{ animationDelay: '0s' }}></div>
-                                    <div className={`w-1 bg-white/50 rounded-full animate-pulse h-6`} style={{ animationDelay: '0.1s' }}></div>
-                                    <div className={`w-1 bg-white/50 rounded-full animate-pulse h-4`} style={{ animationDelay: '0.2s' }}></div>
-                                    <div className={`w-1 bg-white/50 rounded-full animate-pulse h-5`} style={{ animationDelay: '0.3s' }}></div>
-                                </div>
-
+                        {/* Middle: Text Info */}
+                        <div className="flex-1 min-w-0 z-10">
+                            <h3 className={`font-bold text-base truncate ${currentData.colorClass}`}>{currentData.title}</h3>
+                            <div className="flex items-center gap-2">
+                                <span className="relative flex h-2 w-2">
+                                  <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${currentData.bgClass} opacity-75`}></span>
+                                  <span className={`relative inline-flex rounded-full h-2 w-2 ${currentData.bgClass}`}></span>
+                                </span>
+                                <p className="text-xs text-gray-400 font-medium">AI Agent Listening...</p>
                             </div>
                         </div>
 
-                    </div>
+                        {/* Background: Wave Animation (Compressed) */}
+                        <div className="absolute inset-0 flex items-center justify-end opacity-20 pointer-events-none">
+                            <div className="relative w-full h-full overflow-hidden">
+                                 <svg viewBox="0 0 200 20" className={`absolute top-1/2 -translate-y-1/2 right-0 w-[150%] h-24 fill-none ${currentData.colorClass} animate-wave-left`}>
+                                    <path d="M0 10 Q 25 0 50 10 T 100 10 T 150 10 T 200 10 T 250 10 T 300 10 T 350 10 T 400 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                                 </svg>
+                            </div>
+                        </div>
 
+                        {/* Right: Visualizer Bars (Static Simulation) */}
+                        <div className="flex gap-1 h-6 items-center z-10">
+                            <div className={`w-1 bg-white/50 rounded-full animate-pulse h-3`} style={{ animationDelay: '0s' }}></div>
+                            <div className={`w-1 bg-white/50 rounded-full animate-pulse h-6`} style={{ animationDelay: '0.1s' }}></div>
+                            <div className={`w-1 bg-white/50 rounded-full animate-pulse h-4`} style={{ animationDelay: '0.2s' }}></div>
+                            <div className={`w-1 bg-white/50 rounded-full animate-pulse h-5`} style={{ animationDelay: '0.3s' }}></div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </section>
